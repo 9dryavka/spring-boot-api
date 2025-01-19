@@ -18,11 +18,11 @@ public class PageTag {
     @Column(name = "index")
     Long index;
 
-    @Column(name = "page_id")
+    @Column(name = "page_id", nullable = false)
     Long illustPageId;
 
-    @Column(name = "tag_id")
-    Long imageId;
+    @Column(name = "tag_id", nullable = false)
+    Long tagId;
 
     @Column(name = "created_at")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")

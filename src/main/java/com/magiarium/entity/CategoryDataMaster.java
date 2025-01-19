@@ -5,22 +5,29 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.magiarium.data.utils.PageTypeEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
 
 @Entity
 @AllArgsConstructor
+@NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.UpperCamelCaseStrategy.class)
-@Table(name = "category_data_master")
-public class CategoryDataMaster {
+@Table(
+        name = "category_data_master",
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"page_type", "label"})}
+)
+public class CategoryDataMaster implements Serializable {
 
     @Id
     @Column(name = "id")
     Long id;
 
-    @Column(name = "page_type")
+    @Column(name = "page_type", nullable = false)
     @Enumerated(EnumType.STRING)
     PageTypeEnum PageTypeEnum;
 
-    @Column(name = "label", length = 45, unique = true)
+    @Column(name = "label", length = 45, nullable = false)
     String label;
 
     @Column(name = "description", length = 256)

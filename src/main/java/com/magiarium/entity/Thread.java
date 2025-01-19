@@ -21,6 +21,9 @@ public class Thread {
     @Column(name = "id")
     Long id;
 
+    @Column(name = "page_id", nullable = false)
+    Long pageId;
+
     @Column(name = "title", length = 45)
     String title;
 

@@ -2,10 +2,7 @@ package com.magiarium.entity;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -14,21 +11,18 @@ import java.util.Date;
 @Entity
 @AllArgsConstructor
 @JsonNaming(PropertyNamingStrategies.UpperCamelCaseStrategy.class)
-@Table(name = "image")
-public class Image {
+@Table(name = "page_category", uniqueConstraints = @UniqueConstraint(columnNames = {"page_id", "category_id"}))
+public class PageCategory {
 
     @Id
-    @Column(name = "id")
-    Long id;
+    @Column(name = "index")
+    Long index;
 
-    @Column(name = "title", length = 45)
-    String title;
+    @Column(name = "page_id", nullable = false)
+    Long illustPageId;
 
-    @Column(name = "description", length = 256)
-    String description;
-
-    @Column(name = "url")
-    String url;
+    @Column(name = "category_id", nullable = false)
+    Long categoryId;
 
     @Column(name = "created_at")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
