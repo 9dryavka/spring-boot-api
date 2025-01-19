@@ -18,7 +18,7 @@ public class AuthorDataMaster {
     @Column(name = "id")
     Long id;
 
-    @Column(name = "name", length = 45, unique = true)
+    @Column(name = "name", length = 45, nullable = false, unique = true)
     String name;
 
 }

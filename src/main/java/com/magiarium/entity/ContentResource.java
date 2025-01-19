@@ -2,29 +2,22 @@ package com.magiarium.entity;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 
 @Entity
 @AllArgsConstructor
 @JsonNaming(PropertyNamingStrategies.UpperCamelCaseStrategy.class)
-@Table(name = "page_attach_resource")
-public class PageAttachResource {
+@Table(name = "content_resource", uniqueConstraints = @UniqueConstraint(columnNames = {"content_id", "resource_id"}))
+public class ContentResource {
 
     @Id
     @Column(name = "index")
     Long index;
 
-    @Column(name = "page_id")
-    Long pageId;
+    @Column(name = "content_id", nullable = false)
+    Long contentId;
 
-    @Column(name = "resource_type")
-    String resourceType;
-
-    @Column(name = "resource_id")
+    @Column(name = "resource_id", nullable = false)
     Long resourceId;
-
 }

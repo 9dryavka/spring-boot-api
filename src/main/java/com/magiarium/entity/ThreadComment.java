@@ -19,17 +19,17 @@ public class ThreadComment implements Serializable {
     @Column(name = "index")
     Long index;
 
-    @Column(name = "thread_id")
+    @Column(name = "thread_id", nullable = false)
     Long threadId;
 
-    @Column(name = "comment_id")
+    @Column(name = "comment_id", nullable = false)
     Long commentId;
 
     @Column(name = "commented_by")
     String commentedBy;
 
-    @Column(name = "content", nullable = false, length = 256)
-    String content;
+    @Column(name = "comment", length = 256, nullable = false)
+    String comment;
 
     @Column(name = "created_by")
     String createdBy;

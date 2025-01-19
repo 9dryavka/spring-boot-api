@@ -19,27 +19,18 @@ public class PageDataMaster {
     @Column(name = "id")
     Long id;
 
-    @Column(name = "page_type")
+    @Column(name = "page_type", nullable = false)
     @Enumerated(EnumType.STRING)
     PageTypeEnum PageTypeEnum;
 
-    @Column(name = "title", length = 45)
+    @Column(name = "title", length = 45, nullable = false)
     String title;
-
-    @Column(name = "description", length = 256)
-    String description;
-
-    @Column(name = "category_id")
-    Long categoryId;
-
+    
     @Column(name = "author_id")
     Long authorId;
 
-    @Column(name = "content_id")
-    Long contentId;
-
-    @Column(name = "thread_id")
-    Long threadId;
+    @Column(name = "description", length = 256)
+    String description;
 
     @Column(name = "created_at")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
