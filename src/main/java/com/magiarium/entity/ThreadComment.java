@@ -25,18 +25,14 @@ public class ThreadComment implements Serializable {
     @Column(name = "comment_id")
     Long commentId;
 
+    @Column(name = "commented_by")
+    String commentedBy;
+
     @Column(name = "content", nullable = false, length = 256)
     String content;
 
     @Column(name = "created_by")
     String createdBy;
-    
-    @Column(name = "created_at")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    Date createdAt;
-
-    @Column(name = "updated_by")
-    String updatedBy;
 
     @Column(name = "updated_at")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
