@@ -30,14 +30,14 @@ public class Thread {
     @Column(name = "description", length = 256)
     String description;
 
-    @Column(name = "created_by")
+    @Column(name = "created_by", length = 45)
     String createdBy;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     Date createdAt;
 
-    @Column(name = "updated_at")
+    @Column(name = "updated_at", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     Date updatedAt;
 

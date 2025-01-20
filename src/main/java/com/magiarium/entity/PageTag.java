@@ -19,16 +19,16 @@ public class PageTag {
     Long index;
 
     @Column(name = "page_id", nullable = false)
-    Long illustPageId;
+    Long pageId;
 
     @Column(name = "tag_id", nullable = false)
     Long tagId;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     Date createdAt;
 
-    @Column(name = "updated_at")
+    @Column(name = "updated_at", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     Date updatedAt;
 }

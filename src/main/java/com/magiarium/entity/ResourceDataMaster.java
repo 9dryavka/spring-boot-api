@@ -32,11 +32,11 @@ public class ResourceDataMaster {
     @Column(name = "resource_url", length = 256, nullable = false, unique = true)
     String resourceUrl;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     Date createdAt;
 
-    @Column(name = "updated_at")
+    @Column(name = "updated_at", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     Date updatedAt;
 }

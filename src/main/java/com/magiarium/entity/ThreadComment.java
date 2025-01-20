@@ -34,7 +34,11 @@ public class ThreadComment implements Serializable {
     @Column(name = "created_by")
     String createdBy;
 
-    @Column(name = "updated_at")
+    @Column(name = "created_at", nullable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    Date createdAt;
+
+    @Column(name = "updated_at", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     Date updatedAt;
 

@@ -25,18 +25,18 @@ public class PageDataMaster {
 
     @Column(name = "title", length = 45, nullable = false)
     String title;
-    
+
     @Column(name = "author_id")
     Long authorId;
 
     @Column(name = "description", length = 256)
     String description;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     Date createdAt;
 
-    @Column(name = "updated_at")
+    @Column(name = "updated_at", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     Date updatedAt;
 }

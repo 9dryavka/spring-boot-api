@@ -5,6 +5,9 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.magiarium.data.utils.PageTypeEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
 
 @Entity
 @AllArgsConstructor
@@ -25,4 +28,12 @@ public class TagDataMaster {
 
     @Column(name = "description", length = 256)
     String description;
+
+    @Column(name = "created_at", nullable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    Date createdAt;
+
+    @Column(name = "updated_at", nullable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    Date updatedAt;
 }

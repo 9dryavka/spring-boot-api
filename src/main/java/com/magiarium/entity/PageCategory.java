@@ -11,24 +11,24 @@ import java.util.Date;
 @Entity
 @AllArgsConstructor
 @JsonNaming(PropertyNamingStrategies.UpperCamelCaseStrategy.class)
-@Table(name = "page_category", uniqueConstraints = @UniqueConstraint(columnNames = {"page_id", "category_id"}))
+@Table(name = "page_category")
 public class PageCategory {
 
     @Id
     @Column(name = "index")
     Long index;
 
-    @Column(name = "page_id", nullable = false)
+    @Column(name = "page_id", nullable = false, unique = true)
     Long illustPageId;
 
     @Column(name = "category_id", nullable = false)
     Long categoryId;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     Date createdAt;
 
-    @Column(name = "updated_at")
+    @Column(name = "updated_at", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     Date updatedAt;
 }
