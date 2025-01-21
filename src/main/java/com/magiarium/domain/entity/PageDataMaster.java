@@ -1,44 +1,46 @@
-package com.magiarium.entity;
+package com.magiarium.domain.entity;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.magiarium.domain.data.PageTypeEnum;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
 @Entity
+@Data
 @AllArgsConstructor
+@NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.UpperCamelCaseStrategy.class)
-@Table(name = "thread")
-public class Thread {
+@Table(name = "page_data_master")
+public class PageDataMaster {
 
     @Id
     @Column(name = "id")
     Long id;
 
-    @Column(name = "page_id", nullable = false)
-    Long pageId;
+    @Column(name = "page_type", nullable = false)
+    @Enumerated(EnumType.STRING)
+    PageTypeEnum PageTypeEnum;
 
-    @Column(name = "title", length = 45)
+    @Column(name = "title", length = 45, nullable = false)
     String title;
+
+    @Column(name = "author_id")
+    Long authorId;
 
     @Column(name = "description", length = 256)
     String description;
 
-    @Column(name = "created_by")
-    String createdBy;
-
-    @Column(name = "created_at")
+    @Column(name = "created_at", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     Date createdAt;
 
-    @Column(name = "updated_at")
+    @Column(name = "updated_at", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     Date updatedAt;
-
 }

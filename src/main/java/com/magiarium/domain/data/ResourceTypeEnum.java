@@ -1,4 +1,4 @@
-package com.magiarium.data.utils;
+package com.magiarium.domain.data;
 
 public enum ResourceTypeEnum {
     IMAGE,

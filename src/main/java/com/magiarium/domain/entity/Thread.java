@@ -1,4 +1,4 @@
-package com.magiarium.entity;
+package com.magiarium.domain.entity;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -7,15 +7,19 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
 @Entity
+@Data
 @AllArgsConstructor
+@NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.UpperCamelCaseStrategy.class)
-@Table(name = "content")
-public class Content {
+@Table(name = "thread")
+public class Thread {
 
     @Id
     @Column(name = "id")
@@ -24,17 +28,21 @@ public class Content {
     @Column(name = "page_id", nullable = false)
     Long pageId;
 
-    @Column(name = "index", nullable = false)
-    Long index;
+    @Column(name = "title", length = 45)
+    String title;
 
-    @Column(name = "content_json", nullable = false, columnDefinition = "JSON")
-    String contentJson;
+    @Column(name = "description", length = 256)
+    String description;
 
-    @Column(name = "created_at")
+    @Column(name = "created_by", length = 45)
+    String createdBy;
+
+    @Column(name = "created_at", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     Date createdAt;
 
-    @Column(name = "updated_at")
+    @Column(name = "updated_at", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     Date updatedAt;
+
 }
