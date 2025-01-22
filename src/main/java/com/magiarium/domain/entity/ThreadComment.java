@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Entity
@@ -20,8 +21,9 @@ import java.util.Date;
 public class ThreadComment implements Serializable {
 
     @Id
-    @Column(name = "index")
-    Long index;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    Long id;
 
     @Column(name = "thread_id", nullable = false)
     Long threadId;
@@ -38,12 +40,23 @@ public class ThreadComment implements Serializable {
     @Column(name = "created_by")
     String createdBy;
 
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "created_at", nullable = false, insertable = false, updatable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    Date createdAt;
+    Timestamp createdAt;
 
-    @Column(name = "updated_at", nullable = false)
+    @Column(name = "updated_at", nullable = false, insertable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    Date updatedAt;
+    Timestamp updatedAt;
+
+    @PrePersist
+    public void prePersist() {
+        createdAt = new Timestamp(new Date().getTime());
+        updatedAt = new Timestamp(new Date().getTime());
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        updatedAt = new Timestamp(new Date().getTime());
+    }
 
 }

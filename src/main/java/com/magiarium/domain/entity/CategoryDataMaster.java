@@ -22,6 +22,7 @@ import java.io.Serializable;
 public class CategoryDataMaster implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     Long id;
 

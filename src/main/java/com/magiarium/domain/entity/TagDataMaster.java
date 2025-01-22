@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Entity
@@ -20,6 +21,7 @@ import java.util.Date;
 public class TagDataMaster {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     Long id;
 
@@ -33,11 +35,22 @@ public class TagDataMaster {
     @Column(name = "description", length = 256)
     String description;
 
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "created_at", nullable = false, insertable = false, updatable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    Date createdAt;
+    Timestamp createdAt;
 
-    @Column(name = "updated_at", nullable = false)
+    @Column(name = "updated_at", nullable = false, insertable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    Date updatedAt;
+    Timestamp updatedAt;
+
+    @PrePersist
+    public void prePersist() {
+        createdAt = new Timestamp(new Date().getTime());
+        updatedAt = new Timestamp(new Date().getTime());
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        updatedAt = new Timestamp(new Date().getTime());
+    }
 }
