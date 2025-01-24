@@ -27,15 +27,15 @@ public class PageDataMaster {
 
     @Column(name = "page_type", nullable = false)
     @Enumerated(EnumType.STRING)
-    PageTypeEnum PageTypeEnum;
+    PageTypeEnum pageType;
 
-    @Column(name = "title", length = 45, nullable = false)
+    @Column(name = "title", nullable = false)
     String title;
 
     @Column(name = "author_id")
     Long authorId;
 
-    @Column(name = "description", length = 256)
+    @Column(name = "description")
     String description;
 
     @Column(name = "created_at", nullable = false, insertable = false, updatable = false)

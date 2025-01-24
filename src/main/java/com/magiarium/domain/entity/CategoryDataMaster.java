@@ -28,11 +28,11 @@ public class CategoryDataMaster implements Serializable {
 
     @Column(name = "page_type", nullable = false)
     @Enumerated(EnumType.STRING)
-    PageTypeEnum PageTypeEnum;
+    PageTypeEnum pageType;
 
     @Column(name = "label", length = 45, nullable = false)
     String label;
 
-    @Column(name = "description", length = 256)
+    @Column(name = "description")
     String description;
 }

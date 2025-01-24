@@ -15,7 +15,10 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.UpperCamelCaseStrategy.class)
-@Table(name = "content")
+@Table(
+        name = "content",
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"page_id", "index"})}
+)
 public class Content {
 
     @Id

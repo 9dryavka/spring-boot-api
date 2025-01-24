@@ -32,7 +32,7 @@ public class TagDataMaster {
     @Column(name = "label", length = 45, nullable = false)
     String label;
 
-    @Column(name = "description", length = 256)
+    @Column(name = "description")
     String description;
 
     @Column(name = "created_at", nullable = false, insertable = false, updatable = false)

@@ -31,13 +31,10 @@ public class ThreadComment implements Serializable {
     @Column(name = "comment_id", nullable = false)
     Long commentId;
 
-    @Column(name = "commented_by")
-    String commentedBy;
-
-    @Column(name = "comment", length = 256, nullable = false)
+    @Column(name = "comment", length = 1023, nullable = false)
     String comment;
 
-    @Column(name = "created_by")
+    @Column(name = "created_by", length = 45)
     String createdBy;
 
     @Column(name = "created_at", nullable = false, insertable = false, updatable = false)

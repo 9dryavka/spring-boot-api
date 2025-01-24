@@ -27,10 +27,10 @@ public class Thread {
     @Column(name = "page_id", nullable = false)
     Long pageId;
 
-    @Column(name = "title", length = 45)
+    @Column(name = "title")
     String title;
 
-    @Column(name = "description", length = 256)
+    @Column(name = "description")
     String description;
 
     @Column(name = "created_by", length = 45)
