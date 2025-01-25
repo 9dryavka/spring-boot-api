@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Entity
@@ -17,30 +18,42 @@ import java.util.Date;
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.UpperCamelCaseStrategy.class)
 @Table(name = "resource_data_master")
-public class ResourceDataMaster {
+public class ResourceMaster {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     Long id;
 
-    @Column(name = "title", length = 45, nullable = false)
-    String title;
+    @Column(name = "label", length = 45, nullable = false)
+    String label;
 
-    @Column(name = "description", length = 256)
+    @Column(name = "description")
     String description;
 
     @Column(name = "resource_type", nullable = false)
     @Enumerated(EnumType.STRING)
     ResourceTypeEnum resourceType;
 
-    @Column(name = "resource_url", length = 256, nullable = false, unique = true)
+    @Column(name = "resource_url", nullable = false, unique = true)
     String resourceUrl;
 
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "created_at", nullable = false, insertable = false, updatable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    Date createdAt;
+    Timestamp createdAt;
 
-    @Column(name = "updated_at", nullable = false)
+    @Column(name = "updated_at", nullable = false, insertable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    Date updatedAt;
+    Timestamp updatedAt;
+
+    @PrePersist
+    public void prePersist() {
+        createdAt = new Timestamp(new Date().getTime());
+        updatedAt = new Timestamp(new Date().getTime());
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        updatedAt = new Timestamp(new Date().getTime());
+    }
 }

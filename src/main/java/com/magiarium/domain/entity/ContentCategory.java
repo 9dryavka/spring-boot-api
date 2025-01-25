@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Entity
@@ -16,11 +17,12 @@ import java.util.Date;
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.UpperCamelCaseStrategy.class)
 @Table(name = "page_category")
-public class PageCategory {
+public class ContentCategory {
 
     @Id
-    @Column(name = "index")
-    Long index;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    Long id;
 
     @Column(name = "page_id", nullable = false, unique = true)
     Long illustPageId;
@@ -28,11 +30,22 @@ public class PageCategory {
     @Column(name = "category_id", nullable = false)
     Long categoryId;
 
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "created_at", nullable = false, insertable = false, updatable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    Date createdAt;
+    Timestamp createdAt;
 
-    @Column(name = "updated_at", nullable = false)
+    @Column(name = "updated_at", nullable = false, insertable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    Date updatedAt;
+    Timestamp updatedAt;
+
+    @PrePersist
+    public void prePersist() {
+        createdAt = new Timestamp(new Date().getTime());
+        updatedAt = new Timestamp(new Date().getTime());
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        updatedAt = new Timestamp(new Date().getTime());
+    }
 }
