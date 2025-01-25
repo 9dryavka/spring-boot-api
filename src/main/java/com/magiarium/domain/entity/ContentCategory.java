@@ -16,7 +16,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.UpperCamelCaseStrategy.class)
-@Table(name = "page_category")
+@Table(name = "content_category", uniqueConstraints = @UniqueConstraint(columnNames = {"content_id", "category_id"}))
 public class ContentCategory {
 
     @Id
@@ -24,8 +24,8 @@ public class ContentCategory {
     @Column(name = "id")
     Long id;
 
-    @Column(name = "page_id", nullable = false, unique = true)
-    Long illustPageId;
+    @Column(name = "content_id", nullable = false, unique = true)
+    Long contentId;
 
     @Column(name = "category_id", nullable = false)
     Long categoryId;

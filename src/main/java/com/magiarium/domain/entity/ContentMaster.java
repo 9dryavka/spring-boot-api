@@ -31,8 +31,8 @@ public class ContentMaster {
     @Enumerated(EnumType.STRING)
     ContentTypeEnum contentType;
 
-    @Column(name = "label", length = 45, nullable = false)
-    String label;
+    @Column(name = "title", length = 45, nullable = false)
+    String title;
 
     @Column(name = "description")
     String description;

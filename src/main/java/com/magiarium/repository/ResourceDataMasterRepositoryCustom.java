@@ -1,5 +1,6 @@
 package com.magiarium.repository;
 
+import com.magiarium.domain.entity.ContentMaster;
 import com.magiarium.domain.entity.ResourceMaster;
 
 import java.util.List;
@@ -7,21 +8,21 @@ import java.util.List;
 public interface ResourceDataMasterRepositoryCustom {
 
     /**
-     * ページIDに紐付くリソースデータリストを取得する
+     * コンテンツIDに紐付くリソースデータリストを取得する
      *
-     * @param pageId ページID
-     * @param limit  取得件数
-     * @param offset オフセット
+     * @param contentId コンテンツID
+     * @param limit     取得件数
+     * @param offset    オフセット
      * @return リソースIDのリスト
      */
-    List<ResourceMaster> findResourceIdByPageId(Long pageId, Integer limit, Integer offset);
+    List<ResourceMaster> findResourceIdByContentId(Long contentId, Integer limit, Integer offset);
 
     /**
-     * ページIDに紐付くリソースデータの総数を取得する
+     * コンテンツIDに紐付くリソースデータの総数を取得する
      *
-     * @param pageId ページID
+     * @param contentId コンテンツID
      * @return リソースデータの総数
      */
-    Long countByPageId(Long pageId);
+    Long countByContentId(Long contentId);
 
 }

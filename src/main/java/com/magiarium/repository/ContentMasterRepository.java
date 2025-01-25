@@ -10,8 +10,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ContentMasterRepository extends JpaRepository<ContentMaster, Long> {
 
-    ContentMaster findFirstByPageType(ContentTypeEnum pageType);
+    ContentMaster findFirstByContentType(ContentTypeEnum contentType);
 
-    Page<ContentMaster> findByPageType(ContentTypeEnum pageType, Pageable pageable);
+    Page<ContentMaster> findByContentType(ContentTypeEnum contentType, Pageable pageable);
 
 }

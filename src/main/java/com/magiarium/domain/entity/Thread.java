@@ -24,8 +24,8 @@ public class Thread {
     @Column(name = "id")
     Long id;
 
-    @Column(name = "page_id", nullable = false)
-    Long pageId;
+    @Column(name = "content_id", nullable = false)
+    Long content_id;
 
     @Column(name = "title")
     String title;
