@@ -15,22 +15,21 @@ public class ResourceDataMasterRepositoryCustomImpl implements ResourceDataMaste
     private EntityManager entityManager;
 
     /**
-     * ページIDに紐付くリソースデータのリストを取得する
+     * コンテンツIDに紐付くリソースデータのリストを取得する
      *
-     * @param pageId ページID
+     * @param contentId コンテンツID
      * @return リソースIDのリスト
      */
     @Override
-    public List<ResourceMaster> findResourceIdByPageId(Long pageId, Integer limit, Integer offset) {
+    public List<ResourceMaster> findResourceIdByContentId(Long contentId, Integer limit, Integer offset) {
 
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<ResourceMaster> query = cb.createQuery(ResourceMaster.class);
-        Root<ContentMaster> contentRoot = query.from(ContentMaster.class);
-        Join<ContentMaster, ContentResource> contentResourceJoin = contentRoot.join("contentId", JoinType.INNER);
-        Join<ContentResource, ResourceMaster> resourceDataMasterJoin = contentResourceJoin.join("resourceId", JoinType.INNER);
+        Root<ContentResource> contentRoot = query.from(ContentResource.class);
+        Join<ContentResource, ResourceMaster> resourceDataMasterJoin = contentRoot.join("resourceId", JoinType.INNER);
 
         query.select(resourceDataMasterJoin)
-                .where(cb.equal(contentRoot.get("pageId"), pageId));
+                .where(cb.equal(contentRoot.get("contentId").get("id"), contentId));
 
         return entityManager.createQuery(query)
                 .setFirstResult(offset)
@@ -40,15 +39,14 @@ public class ResourceDataMasterRepositoryCustomImpl implements ResourceDataMaste
     }
 
     @Override
-    public Long countByPageId(Long pageId) {
+    public Long countByContentId(Long contentId) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Long> query = cb.createQuery(Long.class);
-        Root<ContentMaster> contentRoot = query.from(ContentMaster.class);
-        Join<ContentMaster, ContentResource> contentResourceJoin = contentRoot.join("contentId", JoinType.INNER);
-        Join<ContentResource, ResourceMaster> resourceDataMasterJoin = contentResourceJoin.join("resourceId", JoinType.INNER);
+        Root<ContentResource> contentRoot = query.from(ContentResource.class);
+        Join<ContentResource, ResourceMaster> resourceMasterJoin = contentRoot.join("resourceId", JoinType.INNER);
 
-        query.select(cb.count(resourceDataMasterJoin))
-                .where(cb.equal(contentRoot.get("pageId"), pageId));
+        query.select(cb.count(resourceMasterJoin))
+                .where(cb.equal(contentRoot.get("contentId").get("id"), contentId));
 
         return entityManager.createQuery(query).getSingleResult();
     }

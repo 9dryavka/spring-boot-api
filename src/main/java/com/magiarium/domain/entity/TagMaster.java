@@ -7,8 +7,12 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -16,10 +20,10 @@ import java.io.Serializable;
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.UpperCamelCaseStrategy.class)
 @Table(
-        name = "category_master",
+        name = "tag_master",
         uniqueConstraints = {@UniqueConstraint(columnNames = {"content_type", "label"})}
 )
-public class CategoryMaster implements Serializable {
+public class TagMaster {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
