@@ -2,7 +2,7 @@ package com.magiarium.domain.entity;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.magiarium.domain.data.PageTypeEnum;
+import com.magiarium.domain.data.ContentTypeEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,7 +19,7 @@ import java.io.Serializable;
         name = "category_data_master",
         uniqueConstraints = {@UniqueConstraint(columnNames = {"page_type", "label"})}
 )
-public class CategoryDataMaster implements Serializable {
+public class CategoryMaster implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +28,7 @@ public class CategoryDataMaster implements Serializable {
 
     @Column(name = "page_type", nullable = false)
     @Enumerated(EnumType.STRING)
-    PageTypeEnum pageType;
+    ContentTypeEnum pageType;
 
     @Column(name = "label", length = 45, nullable = false)
     String label;

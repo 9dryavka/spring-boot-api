@@ -16,19 +16,19 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.UpperCamelCaseStrategy.class)
-@Table(name = "page_tag", uniqueConstraints = @UniqueConstraint(columnNames = {"page_id", "tag_id"}))
-public class PageTag {
+@Table(name = "page_category")
+public class ContentCategory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     Long id;
 
-    @Column(name = "page_id", nullable = false)
-    Long pageId;
+    @Column(name = "page_id", nullable = false, unique = true)
+    Long illustPageId;
 
-    @Column(name = "tag_id", nullable = false)
-    Long tagId;
+    @Column(name = "category_id", nullable = false)
+    Long categoryId;
 
     @Column(name = "created_at", nullable = false, insertable = false, updatable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")

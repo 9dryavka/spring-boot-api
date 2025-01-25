@@ -1,12 +1,12 @@
 package com.magiarium.service.illust;
 
-import com.magiarium.domain.data.PageTypeEnum;
-import com.magiarium.domain.entity.PageDataMaster;
+import com.magiarium.domain.data.ContentTypeEnum;
+import com.magiarium.domain.entity.ContentMaster;
 import com.magiarium.domain.request.SearchIllustRequest;
 import com.magiarium.domain.response.SearchIllustResponse;
-import com.magiarium.repository.PageDataMasterRepository;
+import com.magiarium.repository.ContentMasterRepository;
 import com.magiarium.repository.ResourceDataMasterRepository;
-import com.magiarium.domain.entity.ResourceDataMaster;
+import com.magiarium.domain.entity.ResourceMaster;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +16,7 @@ import java.util.List;
 public class SearchIllustService {
 
     @Autowired
-    private PageDataMasterRepository pageDataMasterRepository;
+    private ContentMasterRepository contentMasterRepository;
     @Autowired
     private ResourceDataMasterRepository resourceDataMasterRepository;
 
@@ -25,7 +25,7 @@ public class SearchIllustService {
 
         // まず最初に、イラストページ用のマスターデータを取得する
         // ※イラストページにページャーはない想定
-        PageDataMaster illustPage = pageDataMasterRepository.findFirstByPageType(PageTypeEnum.ILLUST);
+        ContentMaster illustPage = contentMasterRepository.findFirstByPageType(ContentTypeEnum.ILLUST);
 
         // イラストページが見つからない場合、例外を投げる
         if (illustPage == null) {
@@ -41,7 +41,7 @@ public class SearchIllustService {
         }
 
         // ページIDからリソース情報リストを取得する
-        List<ResourceDataMaster> resourceDataList =
+        List<ResourceMaster> resourceDataList =
                 resourceDataMasterRepository.findResourceIdByPageId(illustPage.getId(), request.getLimit(), request.getOffset());
 
         // データをレスポンス用に加工する

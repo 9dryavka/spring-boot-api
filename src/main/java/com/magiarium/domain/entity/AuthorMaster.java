@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.UpperCamelCaseStrategy.class)
 @Table(name = "author_data_master")
-public class AuthorDataMaster {
+public class AuthorMaster {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

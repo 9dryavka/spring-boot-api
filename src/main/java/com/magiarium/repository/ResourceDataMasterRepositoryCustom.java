@@ -1,6 +1,6 @@
 package com.magiarium.repository;
 
-import com.magiarium.domain.entity.ResourceDataMaster;
+import com.magiarium.domain.entity.ResourceMaster;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ public interface ResourceDataMasterRepositoryCustom {
      * @param offset オフセット
      * @return リソースIDのリスト
      */
-    List<ResourceDataMaster> findResourceIdByPageId(Long pageId, Integer limit, Integer offset);
+    List<ResourceMaster> findResourceIdByPageId(Long pageId, Integer limit, Integer offset);
 
     /**
      * ページIDに紐付くリソースデータの総数を取得する

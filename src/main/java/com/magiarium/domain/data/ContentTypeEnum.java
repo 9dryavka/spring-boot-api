@@ -1,6 +1,6 @@
 package com.magiarium.domain.data;
 
-public enum PageTypeEnum {
+public enum ContentTypeEnum {
     ILLUST,
     NOVEL,
     NOTE,

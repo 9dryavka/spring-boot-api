@@ -2,7 +2,7 @@ package com.magiarium.domain.entity;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.magiarium.domain.data.PageTypeEnum;
+import com.magiarium.domain.data.ResourceTypeEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,23 +17,26 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.UpperCamelCaseStrategy.class)
-@Table(name = "tag_data_master", uniqueConstraints = {@UniqueConstraint(columnNames = {"page_type", "label"})})
-public class TagDataMaster {
+@Table(name = "resource_data_master")
+public class ResourceMaster {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     Long id;
 
-    @Column(name = "page_type", nullable = false)
-    @Enumerated(EnumType.STRING)
-    PageTypeEnum PageTypeEnum;
-
     @Column(name = "label", length = 45, nullable = false)
     String label;
 
     @Column(name = "description")
     String description;
+
+    @Column(name = "resource_type", nullable = false)
+    @Enumerated(EnumType.STRING)
+    ResourceTypeEnum resourceType;
+
+    @Column(name = "resource_url", nullable = false, unique = true)
+    String resourceUrl;
 
     @Column(name = "created_at", nullable = false, insertable = false, updatable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
