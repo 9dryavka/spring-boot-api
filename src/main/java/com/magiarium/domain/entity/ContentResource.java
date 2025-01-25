@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Timestamp;
-import java.util.Date;
+import java.util.*;
 
 @Entity
 @Data
@@ -24,11 +24,13 @@ public class ContentResource {
     @Column(name = "id")
     Long id;
 
-    @Column(name = "content_id", nullable = false)
-    Long contentId;
+    @ManyToOne
+    @JoinColumn(name = "content_id", nullable = false)
+    private Content contentId;
 
-    @Column(name = "resource_id", nullable = false)
-    Long resourceId;
+    @ManyToOne
+    @JoinColumn(name = "resource_id", nullable = false)
+    private ResourceDataMaster resourceId;
 
     @Column(name = "created_at", nullable = false, insertable = false, updatable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")

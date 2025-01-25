@@ -8,7 +8,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -29,9 +32,6 @@ public class Content {
     @Column(name = "page_id", nullable = false)
     Long pageId;
 
-    @Column(name = "index", nullable = false)
-    Long index;
-
     @Column(name = "content_json", nullable = false, columnDefinition = "JSON")
     String contentJson;
 
@@ -42,4 +42,7 @@ public class Content {
     @Column(name = "updated_at", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     Date updatedAt;
+
+    @OneToMany(mappedBy = "contentId")
+    private List<ContentResource> contentResources = new ArrayList<>();
 }
