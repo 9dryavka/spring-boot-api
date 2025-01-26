@@ -1,4 +1,4 @@
-package com.magiarium.domain.response;
+package com.magiarium.domain.response.illust;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.UpperCamelCaseStrategy.class)
-public class IllustSearchIResponse {
+public class SearchIllustListResponse {
 
     private Long total;
 

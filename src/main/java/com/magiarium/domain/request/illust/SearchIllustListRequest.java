@@ -1,4 +1,4 @@
-package com.magiarium.domain.request;
+package com.magiarium.domain.request.illust;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -10,7 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.UpperCamelCaseStrategy.class)
-public class IllustSearchRequest {
+public class SearchIllustListRequest {
 
     String searchQuery;
 

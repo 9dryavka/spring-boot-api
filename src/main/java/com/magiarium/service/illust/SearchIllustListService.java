@@ -2,8 +2,8 @@ package com.magiarium.service.illust;
 
 import com.magiarium.domain.data.ContentTypeEnum;
 import com.magiarium.domain.entity.ContentMaster;
-import com.magiarium.domain.request.IllustSearchRequest;
-import com.magiarium.domain.response.IllustSearchIResponse;
+import com.magiarium.domain.request.illust.SearchIllustListRequest;
+import com.magiarium.domain.response.illust.SearchIllustListResponse;
 import com.magiarium.repository.ContentMasterRepository;
 import com.magiarium.repository.ResourceDataMasterRepository;
 import com.magiarium.domain.entity.ResourceMaster;
@@ -13,14 +13,14 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class IllustSearchService {
+public class SearchIllustListService {
 
     @Autowired
     private ContentMasterRepository contentMasterRepository;
     @Autowired
     private ResourceDataMasterRepository resourceDataMasterRepository;
 
-    public IllustSearchIResponse search(IllustSearchRequest request) {
+    public SearchIllustListResponse search(SearchIllustListRequest request) {
 
 
         // まず最初に、イラストページ用のマスターデータを取得する
@@ -36,7 +36,7 @@ public class IllustSearchService {
         Long total = resourceDataMasterRepository.countByContentId(illustPage.getId());
         if (total == 0) {
             // リソースが存在しない場合、移行の処理をスキップする
-            return IllustSearchIResponse.builder()
+            return SearchIllustListResponse.builder()
                     .build();
         }
 
@@ -45,10 +45,10 @@ public class IllustSearchService {
                 resourceDataMasterRepository.findResourceIdByContentId(illustPage.getId(), request.getLimit(), request.getOffset());
 
         // データをレスポンス用に加工する
-        return IllustSearchIResponse.builder()
+        return SearchIllustListResponse.builder()
                 .total(total)
                 .imageUrlInfos(resourceDataList.stream()
-                        .map(resourceData -> IllustSearchIResponse.ImageUrlInfo.builder()
+                        .map(resourceData -> SearchIllustListResponse.ImageUrlInfo.builder()
                                 .resourceUrl(resourceData.getResourceUrl())
                                 .build())
                         .toList())
