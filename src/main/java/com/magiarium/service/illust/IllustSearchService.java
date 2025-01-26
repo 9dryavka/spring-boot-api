@@ -2,8 +2,8 @@ package com.magiarium.service.illust;
 
 import com.magiarium.domain.data.ContentTypeEnum;
 import com.magiarium.domain.entity.ContentMaster;
-import com.magiarium.domain.request.SearchIllustRequest;
-import com.magiarium.domain.response.SearchIllustResponse;
+import com.magiarium.domain.request.IllustSearchRequest;
+import com.magiarium.domain.response.IllustSearchIResponse;
 import com.magiarium.repository.ContentMasterRepository;
 import com.magiarium.repository.ResourceDataMasterRepository;
 import com.magiarium.domain.entity.ResourceMaster;
@@ -13,14 +13,14 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class SearchIllustService {
+public class IllustSearchService {
 
     @Autowired
     private ContentMasterRepository contentMasterRepository;
     @Autowired
     private ResourceDataMasterRepository resourceDataMasterRepository;
 
-    public SearchIllustResponse search(SearchIllustRequest request) {
+    public IllustSearchIResponse search(IllustSearchRequest request) {
 
 
         // まず最初に、イラストページ用のマスターデータを取得する
@@ -36,7 +36,7 @@ public class SearchIllustService {
         Long total = resourceDataMasterRepository.countByContentId(illustPage.getId());
         if (total == 0) {
             // リソースが存在しない場合、移行の処理をスキップする
-            return SearchIllustResponse.builder()
+            return IllustSearchIResponse.builder()
                     .build();
         }
 
@@ -45,10 +45,10 @@ public class SearchIllustService {
                 resourceDataMasterRepository.findResourceIdByContentId(illustPage.getId(), request.getLimit(), request.getOffset());
 
         // データをレスポンス用に加工する
-        return SearchIllustResponse.builder()
+        return IllustSearchIResponse.builder()
                 .total(total)
                 .imageUrlInfos(resourceDataList.stream()
-                        .map(resourceData -> SearchIllustResponse.ImageUrlInfo.builder()
+                        .map(resourceData -> IllustSearchIResponse.ImageUrlInfo.builder()
                                 .resourceUrl(resourceData.getResourceUrl())
                                 .build())
                         .toList())

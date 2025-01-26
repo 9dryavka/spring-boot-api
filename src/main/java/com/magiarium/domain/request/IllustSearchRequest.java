@@ -10,8 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.UpperCamelCaseStrategy.class)
-@Builder
-public class SearchIllustRequest {
+public class IllustSearchRequest {
 
     String searchQuery;
 
@@ -19,10 +18,8 @@ public class SearchIllustRequest {
 
     List<String> tagList;
 
-    @Builder.Default
     Integer limit = 10;
 
-    @Builder.Default
     Integer offset = 0;
 
 }
