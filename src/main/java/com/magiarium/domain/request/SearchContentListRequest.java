@@ -1,8 +1,10 @@
-package com.magiarium.domain.request.illust;
+package com.magiarium.domain.request;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -10,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.UpperCamelCaseStrategy.class)
-public class SearchIllustListRequest {
+public class SearchContentListRequest {
 
     String searchQuery;
 
@@ -21,5 +23,4 @@ public class SearchIllustListRequest {
     Integer limit = 10;
 
     Integer offset = 0;
-
 }

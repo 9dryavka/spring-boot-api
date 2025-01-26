@@ -25,8 +25,8 @@ public class ContentResource {
     Long id;
 
     @ManyToOne
-    @JoinColumn(name = "content_id", nullable = false)
-    private ContentMaster content;
+    @JoinColumn(name = "item_id", nullable = false)
+    private ItemMaster item;
 
     @ManyToOne
     @JoinColumn(name = "resource_id", nullable = false)

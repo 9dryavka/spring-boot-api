@@ -1,7 +1,10 @@
 package com.magiarium.controller;
 
-import org.springframework.stereotype.Controller;
+import com.magiarium.domain.request.SearchContentListRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -9,15 +12,5 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/note")
 public class NoteController {
 
-
-    @GetMapping("/search")
-    public String search() {
-        return "note/search";
-    }
-
-    @GetMapping("")
-    public String get() {
-        return "note/index";
-    }
 
 }

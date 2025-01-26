@@ -3,6 +3,7 @@ package com.magiarium.domain.entity;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.magiarium.domain.data.ContentTypeEnum;
+import com.magiarium.domain.data.ItemTypeEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,9 +29,9 @@ public class CategoryMaster implements Serializable {
     @Column(name = "id")
     Long id;
 
-    @Column(name = "content_type", nullable = false)
+    @Column(name = "item_type", nullable = false)
     @Enumerated(EnumType.STRING)
-    ContentTypeEnum contentType;
+    ItemTypeEnum itemType;
 
     @Column(name = "label", length = 45, nullable = false)
     String label;
@@ -39,5 +40,5 @@ public class CategoryMaster implements Serializable {
     String description;
 
     @OneToMany(mappedBy = "category")
-    private List<ContentCategory> contentCategories = new ArrayList<>();
+    private List<ItemCategory> contentCategories = new ArrayList<>();
 }

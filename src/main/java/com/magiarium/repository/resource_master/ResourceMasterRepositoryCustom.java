@@ -1,11 +1,10 @@
-package com.magiarium.repository;
+package com.magiarium.repository.resource_master;
 
-import com.magiarium.domain.entity.ContentMaster;
 import com.magiarium.domain.entity.ResourceMaster;
 
 import java.util.List;
 
-public interface ResourceDataMasterRepositoryCustom {
+public interface ResourceMasterRepositoryCustom {
 
     /**
      * コンテンツIDに紐付くリソースデータリストを取得する

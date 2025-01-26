@@ -16,8 +16,8 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.UpperCamelCaseStrategy.class)
-@Table(name = "thread")
-public class Thread {
+@Table(name = "item_tag", uniqueConstraints = @UniqueConstraint(columnNames = {"item_id", "tag_id"}))
+public class ItemTag {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,14 +28,9 @@ public class Thread {
     @JoinColumn(name = "item_id", nullable = false)
     ItemMaster item;
 
-    @Column(name = "title")
-    String title;
-
-    @Column(name = "description")
-    String description;
-
-    @Column(name = "created_by", length = 45)
-    String createdBy;
+    @ManyToOne
+    @JoinColumn(name = "tag_id", nullable = false)
+    TagMaster tag;
 
     @Column(name = "created_at", nullable = false, insertable = false, updatable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -55,5 +50,4 @@ public class Thread {
     public void preUpdate() {
         updatedAt = new Timestamp(new Date().getTime());
     }
-
 }

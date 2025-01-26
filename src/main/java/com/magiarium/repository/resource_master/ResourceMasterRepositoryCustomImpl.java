@@ -1,6 +1,5 @@
-package com.magiarium.repository;
+package com.magiarium.repository.resource_master;
 
-import com.magiarium.domain.entity.ContentMaster;
 import com.magiarium.domain.entity.ContentResource;
 import com.magiarium.domain.entity.ResourceMaster;
 import jakarta.persistence.EntityManager;
@@ -9,7 +8,7 @@ import jakarta.persistence.criteria.*;
 
 import java.util.List;
 
-public class ResourceDataMasterRepositoryCustomImpl implements ResourceDataMasterRepositoryCustom {
+public class ResourceMasterRepositoryCustomImpl implements ResourceMasterRepositoryCustom {
 
     @PersistenceContext
     private EntityManager entityManager;
