@@ -38,6 +38,12 @@ public class ResourceDataMasterRepositoryCustomImpl implements ResourceDataMaste
 
     }
 
+    /**
+     * コンテンツIDに紐付くリソースデータの総数を取得する
+     *
+     * @param contentId コンテンツID
+     * @return リソースデータの総数
+     */
     @Override
     public Long countByContentId(Long contentId) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
