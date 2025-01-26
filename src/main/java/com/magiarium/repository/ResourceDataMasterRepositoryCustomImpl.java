@@ -26,10 +26,10 @@ public class ResourceDataMasterRepositoryCustomImpl implements ResourceDataMaste
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<ResourceMaster> query = cb.createQuery(ResourceMaster.class);
         Root<ContentResource> contentRoot = query.from(ContentResource.class);
-        Join<ContentResource, ResourceMaster> resourceDataMasterJoin = contentRoot.join("resourceId", JoinType.INNER);
+        Join<ContentResource, ResourceMaster> resourceDataMasterJoin = contentRoot.join("resource", JoinType.INNER);
 
         query.select(resourceDataMasterJoin)
-                .where(cb.equal(contentRoot.get("contentId").get("id"), contentId));
+                .where(cb.equal(contentRoot.get("content").get("id"), contentId));
 
         return entityManager.createQuery(query)
                 .setFirstResult(offset)
@@ -43,10 +43,10 @@ public class ResourceDataMasterRepositoryCustomImpl implements ResourceDataMaste
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Long> query = cb.createQuery(Long.class);
         Root<ContentResource> contentRoot = query.from(ContentResource.class);
-        Join<ContentResource, ResourceMaster> resourceMasterJoin = contentRoot.join("resourceId", JoinType.INNER);
+        Join<ContentResource, ResourceMaster> resourceMasterJoin = contentRoot.join("resource", JoinType.INNER);
 
         query.select(cb.count(resourceMasterJoin))
-                .where(cb.equal(contentRoot.get("contentId").get("id"), contentId));
+                .where(cb.equal(contentRoot.get("content").get("id"), contentId));
 
         return entityManager.createQuery(query).getSingleResult();
     }

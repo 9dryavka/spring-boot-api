@@ -24,8 +24,9 @@ public class Thread {
     @Column(name = "id")
     Long id;
 
-    @Column(name = "content_id", nullable = false)
-    Long content_id;
+    @ManyToOne
+    @JoinColumn(name = "content_id", nullable = false)
+    ContentMaster content;
 
     @Column(name = "title")
     String title;

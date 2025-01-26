@@ -39,4 +39,7 @@ public class TagMaster {
 
     @Column(name = "description")
     String description;
+
+    @OneToMany(mappedBy = "tag")
+    private List<ContentTag> contentTags = new ArrayList<>();
 }

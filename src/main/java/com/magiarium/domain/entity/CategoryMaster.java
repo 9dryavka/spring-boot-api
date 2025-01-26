@@ -9,6 +9,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -35,4 +37,7 @@ public class CategoryMaster implements Serializable {
 
     @Column(name = "description")
     String description;
+
+    @OneToMany(mappedBy = "category")
+    private List<ContentCategory> contentCategories = new ArrayList<>();
 }

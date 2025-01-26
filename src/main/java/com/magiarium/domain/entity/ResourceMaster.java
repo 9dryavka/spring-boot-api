@@ -58,4 +58,7 @@ public class ResourceMaster {
     public void preUpdate() {
         updatedAt = new Timestamp(new Date().getTime());
     }
+
+    @OneToMany(mappedBy = "resource")
+    List<ContentResource> contentResources = new ArrayList<>();
 }

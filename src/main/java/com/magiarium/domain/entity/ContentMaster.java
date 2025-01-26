@@ -59,6 +59,12 @@ public class ContentMaster {
         updatedAt = new Timestamp(new Date().getTime());
     }
 
-    @OneToMany(mappedBy = "contentId")
+    @OneToMany(mappedBy = "content")
     private List<ContentResource> contentResources = new ArrayList<>();
+
+    @OneToMany(mappedBy = "content")
+    private List<ContentCategory> contentCategories = new ArrayList<>();
+
+    @OneToMany(mappedBy = "content")
+    private List<Thread> threads = new ArrayList<>();
 }

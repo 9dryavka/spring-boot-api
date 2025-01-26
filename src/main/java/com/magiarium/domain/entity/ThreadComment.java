@@ -10,7 +10,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -25,8 +27,9 @@ public class ThreadComment implements Serializable {
     @Column(name = "id")
     Long id;
 
-    @Column(name = "thread_id", nullable = false)
-    Long threadId;
+    @ManyToOne
+    @JoinColumn(name = "thread_id", nullable = false)
+    Thread thread;
 
     @Column(name = "comment_id", nullable = false)
     Long commentId;
@@ -55,5 +58,8 @@ public class ThreadComment implements Serializable {
     public void preUpdate() {
         updatedAt = new Timestamp(new Date().getTime());
     }
+
+    @OneToMany(mappedBy = "id")
+    private List<Thread> threads = new ArrayList<>();
 
 }

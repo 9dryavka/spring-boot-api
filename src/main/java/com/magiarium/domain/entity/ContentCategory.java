@@ -24,11 +24,13 @@ public class ContentCategory {
     @Column(name = "id")
     Long id;
 
-    @Column(name = "content_id", nullable = false, unique = true)
-    Long contentId;
+    @ManyToOne
+    @JoinColumn(name = "content_id", nullable = false, unique = true)
+    ContentMaster content;
 
-    @Column(name = "category_id", nullable = false)
-    Long categoryId;
+    @ManyToOne
+    @JoinColumn(name = "category_id", nullable = false)
+    CategoryMaster category;
 
     @Column(name = "created_at", nullable = false, insertable = false, updatable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")

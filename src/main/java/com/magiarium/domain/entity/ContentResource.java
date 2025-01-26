@@ -26,11 +26,11 @@ public class ContentResource {
 
     @ManyToOne
     @JoinColumn(name = "content_id", nullable = false)
-    private ContentMaster contentId;
+    private ContentMaster content;
 
     @ManyToOne
     @JoinColumn(name = "resource_id", nullable = false)
-    private ResourceMaster resourceId;
+    private ResourceMaster resource;
 
     @Column(name = "created_at", nullable = false, insertable = false, updatable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")

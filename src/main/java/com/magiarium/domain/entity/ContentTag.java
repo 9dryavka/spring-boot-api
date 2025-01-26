@@ -24,11 +24,13 @@ public class ContentTag {
     @Column(name = "id")
     Long id;
 
-    @Column(name = "content_id", nullable = false)
-    Long contentId;
+    @ManyToOne
+    @JoinColumn(name = "content_id", nullable = false)
+    ContentMaster content;
 
-    @Column(name = "tag_id", nullable = false)
-    Long tagId;
+    @ManyToOne
+    @JoinColumn(name = "tag_id", nullable = false)
+    TagMaster tag;
 
     @Column(name = "created_at", nullable = false, insertable = false, updatable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
