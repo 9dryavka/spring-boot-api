@@ -2,10 +2,17 @@ package com.magiarium.service;
 
 import com.magiarium.domain.data.ContentTypeEnum;
 import com.magiarium.domain.data.ItemTypeEnum;
-import com.magiarium.domain.entity.ContentMaster;
+import com.magiarium.domain.dto.ContentMasterWithItemId;
+import com.magiarium.domain.dto.ItemMasterWithCategoryAndView;
+import com.magiarium.domain.dto.ItemTagMasterWithItemId;
+import com.magiarium.domain.dto.ResourceMasterWithContentId;
 import com.magiarium.domain.request.SearchContentListRequest;
 import com.magiarium.domain.response.SearchContentListResponse;
+import com.magiarium.repository.item_group_master.GroupMasterRepository;
 import com.magiarium.repository.content_master.ContentMasterRepository;
+import com.magiarium.repository.item_master.ItemMasterRepository;
+import com.magiarium.repository.resource_master.ResourceMasterRepository;
+import com.magiarium.repository.item_tag_master.TagMasterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -17,45 +24,75 @@ import java.util.List;
 public class SearchContentListService {
 
     @Autowired
+    private ItemMasterRepository itemMasterRepository;
+    @Autowired
     private ContentMasterRepository contentMasterRepository;
+    @Autowired
+    private TagMasterRepository tagMasterRepository;
+    @Autowired
+    private ResourceMasterRepository resourceMasterRepository;
 
-
+    /**
+     * コンテンツ一覧を検索する
+     *
+     * @param itemType アイテム種別
+     * @param request  検索リクエスト
+     * @return レスポンス用のコンテンツ一覧
+     */
     public SearchContentListResponse search(ItemTypeEnum itemType, SearchContentListRequest request) {
 
-        // アイテムマスタ検索
-        // 条件に一致するコンテンツ総件数を取得する
-        Long total = contentMasterRepository.countByCategoryAndTagAndItemTypeAndContentType(
+        // クライアント側の検索条件に基づいて、条件に合致するアイテムデータの総件数を取得する
+        Long total = itemMasterRepository.countByClientSearch(
                 itemType,
-                request.getCategory(),
+                request.getGroupType(),
+                request.getGroupName(),
                 request.getTagList(),
-                request.getSearchQuery(),
-                ContentTypeEnum.THUMBNAIL
+                request.getSearchQuery()
         );
 
-        // 条件に一致するコンテンツIDリストを取得する
+        // 条件に合致するアイテムデータを実際に取得する
+        // ※この際、アイテムデータに対して1対1の関係にあるコンテンツデータ(カテゴリ、レビュー数)はまとめて取得する
         Pageable pageable = PageRequest.of(request.getOffset(), request.getLimit());
-        List<ContentMaster> responseContentList = contentMasterRepository.findContentIdByCategoryAndTagAndItemTypeAndContentType(
+        List<ItemMasterWithCategoryAndView> responseContentList = itemMasterRepository.findByClientSearch(
                 itemType,
-                request.getCategory(),
+                request.getGroupType(),
+                request.getGroupName(),
                 request.getTagList(),
                 request.getSearchQuery(),
-                ContentTypeEnum.THUMBNAIL,
+                request.getOrderBy(),
                 pageable
         );
 
-        // コンテンツ一覧
-        // カテゴリ一覧
-        // タグ一覧
-        // リソース一覧
+        // 以下、アイテムデータに対して1対Nの関係にあるテーブルからデータを取得する
+        List<Long> itemIdList = responseContentList.stream()
+                .map(ItemMasterWithCategoryAndView::getId)
+                .toList();
 
-        // アイテムIDごとにレスポンス情報を作成する
-        for (ContentMaster targetContent : responseContentList) {
-            // リソース取得を取得
+        // アイテムIDとコンテンツタイプをもとに、コンテンツ一覧を取得する
+        List<ContentMasterWithItemId> contentMasterWithContentId = contentMasterRepository.findByContentTypeAndItemIdInWithItemId(
+                ContentTypeEnum.THUMBNAIL,
+                itemIdList
+        );
+
+        // アイテムIDをもとに、タグ一覧を取得
+        List<ItemTagMasterWithItemId> itemTagMasterWithItemId = tagMasterRepository.findByItemIdIn(itemIdList);
+
+        // コンテンツIDをもとに、リソース一覧を取得
+        List<ResourceMasterWithContentId> resourceMasterWithContentId = resourceMasterRepository.findByContentIdIn(
+                contentMasterWithContentId.stream()
+                        .map(ContentMasterWithItemId::getContentId)
+                        .toList()
+        );
 
 
-        }
+        // アイテム単位に各データをまとめて、レスポンス情報を作成する
+        // TODO ループで回してレスポンスを作成する
 
-        return null;
+
+        SearchContentListResponse response = new SearchContentListResponse();
+        response.setTotal(total);
+        
+        return response;
 
     }
 

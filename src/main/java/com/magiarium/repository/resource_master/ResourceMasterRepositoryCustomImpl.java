@@ -1,5 +1,6 @@
 package com.magiarium.repository.resource_master;
 
+import com.magiarium.domain.dto.ResourceMasterWithContentId;
 import com.magiarium.domain.entity.ContentResource;
 import com.magiarium.domain.entity.ResourceMaster;
 import jakarta.persistence.EntityManager;
@@ -14,45 +15,24 @@ public class ResourceMasterRepositoryCustomImpl implements ResourceMasterReposit
     private EntityManager entityManager;
 
     /**
-     * コンテンツIDに紐付くリソースデータのリストを取得する
+     * コンテンツIDに紐付くリソース情報リストを取得する
      *
-     * @param contentId コンテンツID
-     * @return リソースIDのリスト
+     * @param contentIdList コンテンツIDリスト
+     * @return リソース情報リスト
      */
     @Override
-    public List<ResourceMaster> findResourceIdByContentId(Long contentId, Integer limit, Integer offset) {
+    public List<ResourceMasterWithContentId> findByContentIdIn(List<Long> contentIdList) {
 
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<ResourceMaster> query = cb.createQuery(ResourceMaster.class);
+        CriteriaQuery<ResourceMasterWithContentId> query = cb.createQuery(ResourceMasterWithContentId.class);
         Root<ContentResource> contentRoot = query.from(ContentResource.class);
         Join<ContentResource, ResourceMaster> resourceDataMasterJoin = contentRoot.join("resource", JoinType.INNER);
 
-        query.select(resourceDataMasterJoin)
-                .where(cb.equal(contentRoot.get("content").get("id"), contentId));
+        query.multiselect(contentRoot.get("content").get("id"), resourceDataMasterJoin)
+                .where(contentRoot.get("content").get("id").in(contentIdList));
 
-        return entityManager.createQuery(query)
-                .setFirstResult(offset)
-                .setMaxResults(limit)
-                .getResultList();
+        return entityManager.createQuery(query).getResultList();
 
     }
 
-    /**
-     * コンテンツIDに紐付くリソースデータの総数を取得する
-     *
-     * @param contentId コンテンツID
-     * @return リソースデータの総数
-     */
-    @Override
-    public Long countByContentId(Long contentId) {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Long> query = cb.createQuery(Long.class);
-        Root<ContentResource> contentRoot = query.from(ContentResource.class);
-        Join<ContentResource, ResourceMaster> resourceMasterJoin = contentRoot.join("resource", JoinType.INNER);
-
-        query.select(cb.count(resourceMasterJoin))
-                .where(cb.equal(contentRoot.get("content").get("id"), contentId));
-
-        return entityManager.createQuery(query).getSingleResult();
-    }
 }

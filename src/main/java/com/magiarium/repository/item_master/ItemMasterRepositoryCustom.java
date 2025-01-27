@@ -1,7 +1,9 @@
 package com.magiarium.repository.item_master;
 
-import com.magiarium.domain.data.ContentTypeEnum;
+import com.magiarium.domain.data.ItemGroupTypeEnum;
 import com.magiarium.domain.data.ItemTypeEnum;
+import com.magiarium.domain.data.OrderByTypeEnum;
+import com.magiarium.domain.dto.ItemMasterWithCategoryAndView;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
@@ -9,38 +11,42 @@ import java.util.List;
 public interface ItemMasterRepositoryCustom {
 
     /**
-     * アイテム情報の総件数取得処理
+     * クライアントの検索条件に基づいて、アイテム情報の総件数を取得する
      *
      * @param itemType    アイテムタイプ
-     * @param category    カテゴリ
+     * @param groupType   グループ種別
+     * @param groupName   グループ名
      * @param tagList     タグリスト
      * @param searchQuery 検索文字列
-     * @return アイテム情報の総件数
+     * @return アイテム情報総件数
      */
-    Long countByCategoryAndTagAndItemTypeAndContentType(
+    Long countByClientSearch(
             ItemTypeEnum itemType,
-            String category,
+            ItemGroupTypeEnum groupType,
+            String groupName,
             List<String> tagList,
-            String searchQuery,
-            ContentTypeEnum contentType
+            String searchQuery
     );
 
     /**
-     * アイテムID一覧の検索処理
+     * クライアントの検索条件に基づいて、アイテム情報の総件数を取得する
      *
      * @param itemType    アイテムタイプ
-     * @param category    カテゴリ
+     * @param groupType   グループ種別
+     * @param groupName   グループ名
      * @param tagList     タグリスト
      * @param searchQuery 検索文字列
-     * @param pageable    ページネーション情報
-     * @return アイテムID一覧
+     * @param orderBy     ソート順
+     * @param pageable    ページング情報
+     * @return アイテム情報総件数
      */
-    List<Long> findItemIdByCategoryAndTagAndItemTypeAndContentType(
+    List<ItemMasterWithCategoryAndView> findByClientSearch(
             ItemTypeEnum itemType,
-            String category,
+            ItemGroupTypeEnum groupType,
+            String groupName,
             List<String> tagList,
             String searchQuery,
-            ContentTypeEnum contentType,
+            OrderByTypeEnum orderBy,
             Pageable pageable
     );
 }

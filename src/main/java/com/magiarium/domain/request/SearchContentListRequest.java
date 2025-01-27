@@ -2,6 +2,8 @@ package com.magiarium.domain.request;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.magiarium.domain.data.ItemGroupTypeEnum;
+import com.magiarium.domain.data.OrderByTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,9 +18,13 @@ public class SearchContentListRequest {
 
     String searchQuery;
 
-    String category;
+    ItemGroupTypeEnum groupType;
+
+    String groupName;
 
     List<String> tagList;
+
+    OrderByTypeEnum orderBy;
 
     Integer limit = 10;
 

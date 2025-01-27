@@ -1,16 +1,21 @@
 package com.magiarium.repository.item_master;
 
-import com.magiarium.domain.data.ContentTypeEnum;
+import com.magiarium.domain.data.ItemGroupTypeEnum;
 import com.magiarium.domain.data.ItemTypeEnum;
-import com.magiarium.domain.entity.ContentMaster;
-import com.magiarium.domain.entity.ItemCategory;
+import com.magiarium.domain.data.OrderByTypeEnum;
+import com.magiarium.domain.dto.ItemMasterWithCategoryAndView;
+import com.magiarium.domain.entity.ItemGroup;
 import com.magiarium.domain.entity.ItemMaster;
 import com.magiarium.domain.entity.ItemTag;
+import com.magiarium.repository.item_group_master.GroupMasterRepository;
+import io.micrometer.common.util.StringUtils;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.criteria.*;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.data.domain.Pageable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ItemMasterRepositoryCustomImpl implements ItemMasterRepositoryCustom {
@@ -19,99 +24,115 @@ public class ItemMasterRepositoryCustomImpl implements ItemMasterRepositoryCusto
     private EntityManager entityManager;
 
     /**
-     * コンテンツ情報の総件数取得処理
+     * クライアントの検索条件に基づいて、アイテム情報の総件数を取得する
      *
      * @param itemType    アイテムタイプ
-     * @param category    カテゴリ
+     * @param groupType   グループ種別
+     * @param groupName   グループ名
      * @param tagList     タグリスト
      * @param searchQuery 検索文字列
-     * @return 総件数
+     * @return アイテム情報総件数
      */
     @Override
-    public Long countByCategoryAndTagAndItemTypeAndContentType(
+    public Long countByClientSearch(
             ItemTypeEnum itemType,
-            String category,
+            ItemGroupTypeEnum groupType,
+            String groupName,
             List<String> tagList,
-            String searchQuery,
-            ContentTypeEnum contentType
+            String searchQuery
     ) {
 
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
         Root<ItemMaster> itemRoot = countQuery.from(ItemMaster.class);
-        Join<ItemMaster, ItemTag> tagJoin = itemRoot.join("tag", JoinType.INNER);
-        Join<ItemMaster, ItemCategory> categoryJoin = itemRoot.join("category", JoinType.INNER);
-        Join<ItemMaster, ContentMaster> contentJoin = itemRoot.join("content", JoinType.INNER);
 
-        countQuery.select(cb.count(contentJoin))
+        List<Predicate> predicates = new ArrayList<>();
+        // グループが指定されている場合、グループ情報を絞り込む
+        if (ObjectUtils.isNotEmpty(groupType) && StringUtils.isNotEmpty(groupName)) {
+            Root<ItemGroup> groupRoot = countQuery.from(ItemGroup.class);
+            Join<ItemGroup, GroupMasterRepository> groupJoin = groupRoot.join("group", JoinType.INNER);
+            predicates.add(cb.and(
+                    cb.equal(groupJoin.get("groupType"), groupType),
+                    cb.equal(groupJoin.get("groupName"), groupName)
+            ));
+        }
+        // タグが指定されている場合、タグ情報を絞り込む
+        if (ObjectUtils.isNotEmpty(tagList)) {
+            Join<ItemMaster, ItemTag> tagJoin = itemRoot.join("tag", JoinType.INNER);
+            predicates.add(tagJoin.get("tag").in(tagList));
+
+        }
+        // 検索文字列が指定されている場合、タイトル情報を絞り込む
+        if (StringUtils.isNotEmpty(searchQuery)) {
+            predicates.add(cb.like(itemRoot.get("title"), "%" + searchQuery + "%"));
+        }
+
+        countQuery.select(cb.count(itemRoot))
                 .where(
                         cb.and(
-                                cb.and(
-                                        cb.equal(categoryJoin.get("itemType"), itemType),
-                                        cb.equal(contentJoin.get("category"), category)
-                                ),
-                                cb.and(
-                                        cb.equal(contentJoin.get("itemType"), itemType),
-                                        tagJoin.get("tag").in(tagList)
-                                ),
-                                cb.and(
-                                        cb.equal(contentJoin.get("contentType"), contentType),
-                                        cb.like(contentJoin.get("title"), "%" + searchQuery + "%")
-                                )
+                                cb.equal(itemRoot.get("itemType"), itemType),
+                                cb.and(predicates.toArray(new Predicate[0]))
                         )
-                )
-                .orderBy(cb.desc(contentJoin.get("createdAt")));
-
+                );
 
         return entityManager.createQuery(countQuery).getSingleResult();
     }
 
     /**
-     * コンテンツ情報の検索処理
+     * クライアントの検索条件に基づいて、アイテム情報の総件数を取得する
      *
      * @param itemType    アイテムタイプ
-     * @param category    カテゴリ
+     * @param groupType   グループ種別
+     * @param groupName   グループ名
      * @param tagList     タグリスト
      * @param searchQuery 検索文字列
-     * @param pageable    ページネーション情報
-     * @return コンテンツマスタリスト
+     * @param orderBy     ソート順
+     * @param pageable    ページング情報
+     * @return アイテム情報総件数
      */
     @Override
-    public List<Long> findItemIdByCategoryAndTagAndItemTypeAndContentType(
+    public List<ItemMasterWithCategoryAndView> findByClientSearch(
             ItemTypeEnum itemType,
-            String category,
+            ItemGroupTypeEnum groupType,
+            String groupName,
             List<String> tagList,
             String searchQuery,
-            ContentTypeEnum contentType,
+            OrderByTypeEnum orderBy,
             Pageable pageable
     ) {
 
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Long> query = cb.createQuery(Long.class);
+        CriteriaQuery<ItemMasterWithCategoryAndView> query = cb.createQuery(ItemMasterWithCategoryAndView.class);
         Root<ItemMaster> itemRoot = query.from(ItemMaster.class);
-        Join<ItemMaster, ItemTag> tagJoin = itemRoot.join("tag", JoinType.INNER);
-        Join<ItemMaster, ItemCategory> categoryJoin = itemRoot.join("category", JoinType.INNER);
-        Join<ItemMaster, ContentMaster> contentJoin = itemRoot.join("content", JoinType.INNER);
 
-        query.select(contentJoin.get("id"))
+        List<Predicate> predicates = new ArrayList<>();
+        // グループが指定されている場合、グループ情報を絞り込む
+        if (ObjectUtils.isNotEmpty(groupType) && StringUtils.isNotEmpty(groupName)) {
+            Root<ItemGroup> groupRoot = query.from(ItemGroup.class);
+            Join<ItemGroup, GroupMasterRepository> groupJoin = groupRoot.join("group", JoinType.INNER);
+            predicates.add(cb.and(
+                    cb.equal(groupJoin.get("groupType"), groupType),
+                    cb.equal(groupJoin.get("groupName"), groupName)
+            ));
+        }
+        // タグが指定されている場合、タグ情報を絞り込む
+        if (ObjectUtils.isNotEmpty(tagList)) {
+            Join<ItemMaster, ItemTag> tagJoin = itemRoot.join("tag", JoinType.INNER);
+            predicates.add(tagJoin.get("tag").in(tagList));
+
+        }
+        // 検索文字列が指定されている場合、タイトル情報を絞り込む
+        if (StringUtils.isNotEmpty(searchQuery)) {
+            predicates.add(cb.like(itemRoot.get("title"), "%" + searchQuery + "%"));
+        }
+
+        query.multiselect(itemRoot, itemRoot.get("category"), itemRoot.get("view"))
                 .where(
                         cb.and(
-                                cb.and(
-                                        cb.equal(categoryJoin.get("itemType"), itemType),
-                                        cb.equal(contentJoin.get("category"), category)
-                                ),
-                                cb.and(
-                                        cb.equal(contentJoin.get("itemType"), itemType),
-                                        tagJoin.get("tag").in(tagList)
-                                ),
-                                cb.and(
-                                        cb.equal(contentJoin.get("contentType"), contentType),
-                                        cb.like(contentJoin.get("title"), "%" + searchQuery + "%")
-                                )
+                                cb.equal(itemRoot.get("itemType"), itemType),
+                                cb.and(predicates.toArray(new Predicate[0]))
                         )
-                )
-                .orderBy(cb.desc(contentJoin.get("createdAt")));
-
+                );
 
         return entityManager.createQuery(query)
                 .setFirstResult((int) pageable.getOffset())

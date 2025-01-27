@@ -1,4 +1,4 @@
-package com.magiarium.repository.group_master;
+package com.magiarium.repository.item_group_master;
 
 import com.magiarium.domain.entity.ItemGroupMaster;
 import org.springframework.data.jpa.repository.JpaRepository;
