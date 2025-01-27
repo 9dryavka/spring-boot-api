@@ -30,24 +30,24 @@ public class ContentMaster {
 
     @Column(name = "content_type", nullable = false)
     @Enumerated(EnumType.STRING)
-    ContentTypeEnum contentType;
+    private ContentTypeEnum contentType;
 
     @Column(name = "label", length = 45, nullable = false)
-    String label;
+    private String label;
 
     @Column(name = "description")
-    String description;
+    private String description;
 
     @Column(name = "content_json", nullable = false, columnDefinition = "JSON")
-    String contentJson;
+    private String contentJson;
 
     @Column(name = "created_at", nullable = false, insertable = false, updatable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    Timestamp createdAt;
+    private Timestamp createdAt;
 
     @Column(name = "updated_at", nullable = false, insertable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    Timestamp updatedAt;
+    private Timestamp updatedAt;
 
     @PrePersist
     public void prePersist() {

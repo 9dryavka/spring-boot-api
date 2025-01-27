@@ -18,9 +18,9 @@ public class ItemAuthorMaster {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    Long id;
+    private Long id;
 
     @Column(name = "name", length = 45, nullable = false, unique = true)
-    String name;
+    private String name;
 
 }

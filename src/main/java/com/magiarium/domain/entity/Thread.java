@@ -22,28 +22,28 @@ public class Thread {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    Long id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "item_id", nullable = false)
-    ItemMaster item;
+    private ItemMaster item;
 
     @Column(name = "title")
-    String title;
+    private String title;
 
     @Column(name = "description")
-    String description;
+    private String description;
 
     @Column(name = "created_by", length = 45)
-    String createdBy;
+    private String createdBy;
 
     @Column(name = "created_at", nullable = false, insertable = false, updatable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    Timestamp createdAt;
+    private Timestamp createdAt;
 
     @Column(name = "updated_at", nullable = false, insertable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    Timestamp updatedAt;
+    private Timestamp updatedAt;
 
     @PrePersist
     public void prePersist() {

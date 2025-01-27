@@ -26,17 +26,17 @@ public class ItemGroupMaster implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    Long id;
+    private Long id;
 
     @Column(name = "group_type", nullable = false)
     @Enumerated(EnumType.STRING)
-    ItemGroupTypeEnum groupType;
+    private ItemGroupTypeEnum groupType;
 
     @Column(name = "label", length = 45, nullable = false)
-    String label;
+    private String label;
 
     @Column(name = "description")
-    String description;
+    private String description;
 
     @OneToMany(mappedBy = "group")
     private List<ItemGroup> contentGroups = new ArrayList<>();

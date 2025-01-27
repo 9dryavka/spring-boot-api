@@ -25,28 +25,28 @@ public class ResourceMaster {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    Long id;
+    private Long id;
 
     @Column(name = "label", length = 45, nullable = false)
-    String label;
+    private String label;
 
     @Column(name = "description")
-    String description;
+    private String description;
 
     @Column(name = "resource_type", nullable = false)
     @Enumerated(EnumType.STRING)
-    ResourceTypeEnum resourceType;
+    private ResourceTypeEnum resourceType;
 
     @Column(name = "resource_url", nullable = false, unique = true)
-    String resourceUrl;
+    private String resourceUrl;
 
     @Column(name = "created_at", nullable = false, insertable = false, updatable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    Timestamp createdAt;
+    private Timestamp createdAt;
 
     @Column(name = "updated_at", nullable = false, insertable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    Timestamp updatedAt;
+    private Timestamp updatedAt;
 
     @PrePersist
     public void prePersist() {
@@ -60,5 +60,5 @@ public class ResourceMaster {
     }
 
     @OneToMany(mappedBy = "resource")
-    List<ContentResource> contentResources = new ArrayList<>();
+    private List<ContentResource> contentResources = new ArrayList<>();
 }

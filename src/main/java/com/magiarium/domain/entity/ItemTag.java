@@ -22,23 +22,23 @@ public class ItemTag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    Long id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "item_id", nullable = false)
-    ItemMaster item;
+    private ItemMaster item;
 
     @ManyToOne
     @JoinColumn(name = "tag_id", nullable = false)
-    ItemTagMaster tag;
+    private ItemTagMaster tag;
 
     @Column(name = "created_at", nullable = false, insertable = false, updatable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    Timestamp createdAt;
+    private Timestamp createdAt;
 
     @Column(name = "updated_at", nullable = false, insertable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    Timestamp updatedAt;
+    private Timestamp updatedAt;
 
     @PrePersist
     public void prePersist() {

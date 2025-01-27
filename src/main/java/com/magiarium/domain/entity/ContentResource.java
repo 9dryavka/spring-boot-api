@@ -22,14 +22,14 @@ public class ContentResource {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    Long id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "content_id", nullable = false)
     private ContentMaster content;
 
     @Column(name = "relation_label")
-    String relationLabel;
+    private String relationLabel;
 
     @ManyToOne
     @JoinColumn(name = "resource_id", nullable = false)
@@ -37,11 +37,11 @@ public class ContentResource {
 
     @Column(name = "created_at", nullable = false, insertable = false, updatable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    Timestamp createdAt;
+    private Timestamp createdAt;
 
     @Column(name = "updated_at", nullable = false, insertable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    Timestamp updatedAt;
+    private Timestamp updatedAt;
 
     @PrePersist
     public void prePersist() {

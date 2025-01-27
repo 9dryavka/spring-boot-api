@@ -17,9 +17,9 @@ public class ItemView {
 
     @Id
     @JoinColumn(name = "item_id")
-    ItemMaster item;
+    private ItemMaster item;
 
     @Column(name = "view_count")
-    Long viewCount;
-    
+    private Long viewCount;
+
 }

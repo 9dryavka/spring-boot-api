@@ -25,17 +25,17 @@ public class ItemTagMaster {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    Long id;
+    private Long id;
 
     @Column(name = "item_type", nullable = false)
     @Enumerated(EnumType.STRING)
-    ItemTypeEnum itemType;
+    private ItemTypeEnum itemType;
 
     @Column(name = "label", length = 45, nullable = false)
-    String label;
+    private String label;
 
     @Column(name = "description")
-    String description;
+    private String description;
 
     @OneToMany(mappedBy = "tag")
     private List<ItemTag> itemTags = new ArrayList<>();

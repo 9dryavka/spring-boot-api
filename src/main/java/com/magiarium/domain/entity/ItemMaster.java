@@ -25,28 +25,28 @@ public class ItemMaster {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    Long id;
+    private Long id;
 
     @Column(name = "is_active", nullable = false)
-    Boolean isActive;
+    private Boolean isActive;
 
     @Column(name = "item_type", nullable = false)
     @Enumerated(EnumType.STRING)
-    ItemTypeEnum itemType;
+    private ItemTypeEnum itemType;
 
     @Column(name = "title", length = 45, nullable = false)
-    String title;
+    private String title;
 
     @Column(name = "description")
-    String description;
+    private String description;
 
     @Column(name = "created_at", nullable = false, insertable = false, updatable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    Timestamp createdAt;
+    private Timestamp createdAt;
 
     @Column(name = "updated_at", nullable = false, insertable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    Timestamp updatedAt;
+    private Timestamp updatedAt;
 
     @PrePersist
     public void prePersist() {
@@ -60,7 +60,7 @@ public class ItemMaster {
     }
 
     @OneToMany(mappedBy = "item")
-    private List<ItemGroup> groupItems = new ArrayList<>();
+    private List<ItemGroup> itemGroups = new ArrayList<>();
 
     @OneToMany(mappedBy = "item")
     private List<ItemContent> itemContents = new ArrayList<>();

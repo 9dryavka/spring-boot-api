@@ -25,28 +25,28 @@ public class ThreadComment implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    Long id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "thread_id", nullable = false)
-    Thread thread;
+    private Thread thread;
 
     @Column(name = "comment_id", nullable = false)
-    Long commentId;
+    private Long commentId;
 
     @Column(name = "comment", length = 1023, nullable = false)
-    String comment;
+    private String comment;
 
     @Column(name = "created_by", length = 45)
-    String createdBy;
+    private String createdBy;
 
     @Column(name = "created_at", nullable = false, insertable = false, updatable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    Timestamp createdAt;
+    private Timestamp createdAt;
 
     @Column(name = "updated_at", nullable = false, insertable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    Timestamp updatedAt;
+    private Timestamp updatedAt;
 
     @PrePersist
     public void prePersist() {

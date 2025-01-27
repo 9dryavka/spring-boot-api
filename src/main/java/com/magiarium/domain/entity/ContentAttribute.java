@@ -19,17 +19,17 @@ public class ContentAttribute {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    Long id;
+    private Long id;
 
     @Column(name = "attribute_type", nullable = false)
     @Enumerated(EnumType.STRING)
-    ContentAttributeTypeEnum attributeType;
+    private ContentAttributeTypeEnum attributeType;
 
     @Column(name = "attribute_id")
-    Integer attributeId;
+    private Integer attributeId;
 
     @ManyToOne
     @Column(name = "content_id", nullable = false)
-    ContentMaster contentMaster;
+    private ContentMaster contentMaster;
 
 }
