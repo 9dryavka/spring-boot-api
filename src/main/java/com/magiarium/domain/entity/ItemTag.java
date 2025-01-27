@@ -30,7 +30,7 @@ public class ItemTag {
 
     @ManyToOne
     @JoinColumn(name = "tag_id", nullable = false)
-    TagMaster tag;
+    ItemTagMaster tag;
 
     @Column(name = "created_at", nullable = false, insertable = false, updatable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")

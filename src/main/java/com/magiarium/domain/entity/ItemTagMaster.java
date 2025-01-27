@@ -2,7 +2,6 @@ package com.magiarium.domain.entity;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.magiarium.domain.data.ContentTypeEnum;
 import com.magiarium.domain.data.ItemTypeEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -21,7 +20,7 @@ import java.util.List;
         name = "tag_master",
         uniqueConstraints = {@UniqueConstraint(columnNames = {"item_type", "label"})}
 )
-public class TagMaster {
+public class ItemTagMaster {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

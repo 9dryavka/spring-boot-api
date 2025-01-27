@@ -2,6 +2,7 @@ package com.magiarium.domain.entity;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.magiarium.domain.data.ContentTypeEnum;
 import com.magiarium.domain.data.ItemTypeEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -19,7 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.UpperCamelCaseStrategy.class)
-@Table(name = "content_master", uniqueConstraints = {@UniqueConstraint(columnNames = {"item_type", "label"})})
+@Table(name = "content_master")
 public class ContentMaster {
 
     @Id
@@ -27,12 +28,12 @@ public class ContentMaster {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "item_type", nullable = false)
+    @Column(name = "content_type", nullable = false)
     @Enumerated(EnumType.STRING)
-    ItemTypeEnum itemType;
+    ContentTypeEnum contentType;
 
-    @Column(name = "title", length = 45, nullable = false)
-    String title;
+    @Column(name = "label", length = 45, nullable = false)
+    String label;
 
     @Column(name = "description")
     String description;

@@ -2,7 +2,6 @@ package com.magiarium.domain.entity;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.magiarium.domain.data.ContentTypeEnum;
 import com.magiarium.domain.data.ItemTypeEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -27,6 +26,9 @@ public class ItemMaster {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     Long id;
+
+    @Column(name = "is_active", nullable = false)
+    Boolean isActive;
 
     @Column(name = "item_type", nullable = false)
     @Enumerated(EnumType.STRING)
@@ -58,7 +60,7 @@ public class ItemMaster {
     }
 
     @OneToMany(mappedBy = "item")
-    private List<ItemCategory> itemCategories = new ArrayList<>();
+    private List<ItemGroup> groupItems = new ArrayList<>();
 
     @OneToMany(mappedBy = "item")
     private List<ItemContent> itemContents = new ArrayList<>();

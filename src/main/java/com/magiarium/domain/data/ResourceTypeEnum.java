@@ -2,6 +2,6 @@ package com.magiarium.domain.data;
 
 public enum ResourceTypeEnum {
     IMAGE,
-    VIDEO,
-    LINK
+    INTERNAL_LINK,
+    EXTERNAL_LINK,
 }

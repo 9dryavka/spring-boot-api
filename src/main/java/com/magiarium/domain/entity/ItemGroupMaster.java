@@ -2,8 +2,7 @@ package com.magiarium.domain.entity;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.magiarium.domain.data.ContentTypeEnum;
-import com.magiarium.domain.data.ItemTypeEnum;
+import com.magiarium.domain.data.ItemGroupTypeEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,19 +18,19 @@ import java.util.List;
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.UpperCamelCaseStrategy.class)
 @Table(
-        name = "category_master",
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"content_type", "label"})}
+        name = "group_master",
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"item_type", "label"})}
 )
-public class CategoryMaster implements Serializable {
+public class ItemGroupMaster implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     Long id;
 
-    @Column(name = "item_type", nullable = false)
+    @Column(name = "group_type", nullable = false)
     @Enumerated(EnumType.STRING)
-    ItemTypeEnum itemType;
+    ItemGroupTypeEnum groupType;
 
     @Column(name = "label", length = 45, nullable = false)
     String label;
@@ -39,6 +38,6 @@ public class CategoryMaster implements Serializable {
     @Column(name = "description")
     String description;
 
-    @OneToMany(mappedBy = "category")
-    private List<ItemCategory> contentCategories = new ArrayList<>();
+    @OneToMany(mappedBy = "group")
+    private List<ItemGroup> contentGroups = new ArrayList<>();
 }
