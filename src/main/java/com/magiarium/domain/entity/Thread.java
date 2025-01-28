@@ -25,10 +25,10 @@ public class Thread {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "item_id", nullable = false)
+    @JoinColumn(name = "item_id", nullable = false, unique = true)
     private ItemMaster item;
 
-    @Column(name = "title")
+    @Column(name = "title", length = 45, nullable = false)
     private String title;
 
     @Column(name = "description")

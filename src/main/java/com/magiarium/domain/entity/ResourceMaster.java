@@ -60,5 +60,5 @@ public class ResourceMaster {
     }
 
     @OneToMany(mappedBy = "resource")
-    private List<ContentResource> contentResources = new ArrayList<>();
+    private List<ContentResourceRelation> contentResourceRelations = new ArrayList<>();
 }

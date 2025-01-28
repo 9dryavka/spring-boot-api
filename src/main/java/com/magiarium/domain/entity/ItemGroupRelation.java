@@ -9,15 +9,15 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Timestamp;
-import java.util.*;
+import java.util.Date;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.UpperCamelCaseStrategy.class)
-@Table(name = "content_resource", uniqueConstraints = @UniqueConstraint(columnNames = {"content_id", "resource_id"}))
-public class ContentResource {
+@Table(name = "item_group_relation", uniqueConstraints = @UniqueConstraint(columnNames = {"group_id", "item_id"}))
+public class ItemGroupRelation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,15 +25,12 @@ public class ContentResource {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "content_id", nullable = false)
-    private ContentMaster content;
-
-    @Column(name = "relation_label")
-    private String relationLabel;
+    @JoinColumn(name = "group_id", nullable = false)
+    private ItemGroupMaster group;
 
     @ManyToOne
-    @JoinColumn(name = "resource_id", nullable = false)
-    private ResourceMaster resource;
+    @JoinColumn(name = "item_id", nullable = false, unique = true)
+    private ItemMaster item;
 
     @Column(name = "created_at", nullable = false, insertable = false, updatable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")

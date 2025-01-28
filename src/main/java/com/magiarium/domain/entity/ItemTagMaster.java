@@ -17,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.UpperCamelCaseStrategy.class)
 @Table(
-        name = "tag_master",
+        name = "item_tag_master",
         uniqueConstraints = {@UniqueConstraint(columnNames = {"item_type", "label"})}
 )
 public class ItemTagMaster {
@@ -38,5 +38,5 @@ public class ItemTagMaster {
     private String description;
 
     @OneToMany(mappedBy = "tag")
-    private List<ItemTag> itemTags = new ArrayList<>();
+    private List<ItemTagRelation> itemTagRelations = new ArrayList<>();
 }

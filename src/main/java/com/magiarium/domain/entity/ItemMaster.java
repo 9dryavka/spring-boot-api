@@ -19,7 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.UpperCamelCaseStrategy.class)
-@Table(name = "item_master", uniqueConstraints = {@UniqueConstraint(columnNames = {"item_type", "title"})})
+@Table(name = "item_master")
 public class ItemMaster {
 
     @Id
@@ -60,10 +60,10 @@ public class ItemMaster {
     }
 
     @OneToMany(mappedBy = "item")
-    private List<ItemGroup> itemGroups = new ArrayList<>();
+    private List<ItemGroupRelation> itemGroupRelations = new ArrayList<>();
 
     @OneToMany(mappedBy = "item")
-    private List<ItemContent> itemContents = new ArrayList<>();
+    private List<ItemContentRelation> itemContentRelations = new ArrayList<>();
 
     @OneToMany(mappedBy = "content")
     private List<Thread> threads = new ArrayList<>();

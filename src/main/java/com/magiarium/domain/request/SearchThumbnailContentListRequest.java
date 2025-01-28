@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.UpperCamelCaseStrategy.class)
-public class SearchContentListRequest {
+public class SearchThumbnailContentListRequest {
 
     String searchQuery;
 

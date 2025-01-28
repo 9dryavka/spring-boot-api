@@ -16,13 +16,16 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.UpperCamelCaseStrategy.class)
-@Table(name = "item_content", uniqueConstraints = @UniqueConstraint(columnNames = {"item_id", "content_id"}))
-public class ItemContent {
+@Table(name = "item_content_relation", uniqueConstraints = @UniqueConstraint(columnNames = {"item_id", "content_id"}))
+public class ItemContentRelation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
+
+    @Column(name = "label")
+    private String label;
 
     @ManyToOne
     @JoinColumn(name = "item_id", nullable = false)

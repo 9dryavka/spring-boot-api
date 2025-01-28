@@ -17,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.UpperCamelCaseStrategy.class)
 @Builder
-public class SearchContentListResponse {
+public class SearchThumbnailContentListResponse {
 
     private Long total;
 

@@ -28,6 +28,9 @@ public class ContentAttribute {
     @Column(name = "attribute_id")
     private Integer attributeId;
 
+    @Column(name = "label")
+    private String label;
+
     @ManyToOne
     @Column(name = "content_id", nullable = false)
     private ContentMaster contentMaster;

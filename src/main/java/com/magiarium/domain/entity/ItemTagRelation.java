@@ -16,8 +16,8 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.UpperCamelCaseStrategy.class)
-@Table(name = "item_group", uniqueConstraints = @UniqueConstraint(columnNames = {"group_id", "item_id"}))
-public class ItemGroup {
+@Table(name = "item_tag_relation", uniqueConstraints = @UniqueConstraint(columnNames = {"item_id", "tag_id"}))
+public class ItemTagRelation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,12 +25,12 @@ public class ItemGroup {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "group_id", nullable = false)
-    private ItemGroupMaster group;
+    @JoinColumn(name = "item_id", nullable = false)
+    private ItemMaster item;
 
     @ManyToOne
-    @JoinColumn(name = "item_id", nullable = false, unique = true)
-    private ItemMaster item;
+    @JoinColumn(name = "tag_id", nullable = false)
+    private ItemTagMaster tag;
 
     @Column(name = "created_at", nullable = false, insertable = false, updatable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")

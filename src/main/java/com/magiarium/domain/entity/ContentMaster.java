@@ -3,7 +3,6 @@ package com.magiarium.domain.entity;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.magiarium.domain.data.ContentTypeEnum;
-import com.magiarium.domain.data.ItemTypeEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -61,6 +60,6 @@ public class ContentMaster {
     }
 
     @OneToMany(mappedBy = "content")
-    private List<ContentResource> contentResources = new ArrayList<>();
+    private List<ContentResourceRelation> contentResourceRelations = new ArrayList<>();
 
 }

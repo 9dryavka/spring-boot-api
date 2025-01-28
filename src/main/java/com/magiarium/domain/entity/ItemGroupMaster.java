@@ -18,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.UpperCamelCaseStrategy.class)
 @Table(
-        name = "group_master",
+        name = "item_group_master",
         uniqueConstraints = {@UniqueConstraint(columnNames = {"item_type", "label"})}
 )
 public class ItemGroupMaster implements Serializable {
@@ -39,5 +39,5 @@ public class ItemGroupMaster implements Serializable {
     private String description;
 
     @OneToMany(mappedBy = "group")
-    private List<ItemGroup> contentGroups = new ArrayList<>();
+    private List<ItemGroupRelation> contentGroups = new ArrayList<>();
 }
