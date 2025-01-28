@@ -1,9 +1,8 @@
 package com.magiarium.controller;
 
-import com.magiarium.domain.data.ContentTypeEnum;
 import com.magiarium.domain.data.ItemTypeEnum;
-import com.magiarium.domain.request.SearchContentListRequest;
-import com.magiarium.domain.response.SearchContentListResponse;
+import com.magiarium.domain.request.SearchThumbnailContentListRequest;
+import com.magiarium.domain.response.SearchThumbnailContentListResponse;
 import com.magiarium.service.SearchContentListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,9 +18,9 @@ public class IllustController {
     private SearchContentListService searchIllustListService;
 
     @GetMapping("/search")
-    public ResponseEntity<SearchContentListResponse> searchContentList(SearchContentListRequest request) {
+    public ResponseEntity<SearchThumbnailContentListResponse> searchContentList(SearchThumbnailContentListRequest request) {
 
-        SearchContentListResponse response = searchIllustListService.search(ItemTypeEnum.ILLUST, request);
+        SearchThumbnailContentListResponse response = searchIllustListService.search(ItemTypeEnum.ILLUST, request);
 
         return ResponseEntity.ok(response);
 

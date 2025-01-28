@@ -1,5 +1,6 @@
 package com.magiarium.domain.dto;
 
+import com.magiarium.domain.entity.ItemMaster;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,16 +16,16 @@ public class ItemMasterWithCategoryAndView {
 
     Long id;
 
-    String group;
-
     String title;
 
     String description;
 
-    Long viewCount;
-
     Timestamp createdAt;
 
     Timestamp updatedAt;
+
+    String groupName;
+
+    Long viewCount;
 
 }

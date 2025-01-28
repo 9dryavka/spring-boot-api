@@ -33,7 +33,12 @@ public class ContentMasterRepositoryCustomImpl implements ContentMasterRepositor
         Root<ItemMaster> contentRoot = query.from(ItemMaster.class);
         Join<ItemMaster, ContentMaster> contentJoin = contentRoot.join("content", jakarta.persistence.criteria.JoinType.INNER);
 
-        query.multiselect(contentRoot.get("id"), contentJoin)
+        query.select(cb.construct(ContentMasterWithItemId.class,
+                        contentJoin.get("itemContentRelations").get("id"),
+                        contentJoin.get("id"),
+                        contentJoin.get("contentType")
+                        // TODO ここはコンテンツマスタの情報を取得するように修正する
+                ))
                 .where(
                         cb.and(
                                 cb.equal(contentJoin.get("contentType"), contentType),

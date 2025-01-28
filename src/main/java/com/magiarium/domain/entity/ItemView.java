@@ -16,8 +16,8 @@ import lombok.NoArgsConstructor;
 public class ItemView {
 
     @Id
-    @JoinColumn(name = "item_id")
-    private ItemMaster item;
+    @Column(name = "item_id")
+    private Long itemId;
 
     @Column(name = "view_count")
     private Long viewCount;

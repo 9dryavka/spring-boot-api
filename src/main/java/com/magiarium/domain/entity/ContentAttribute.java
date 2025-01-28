@@ -32,7 +32,7 @@ public class ContentAttribute {
     private String label;
 
     @ManyToOne
-    @Column(name = "content_id", nullable = false)
+    @JoinColumn(name = "content_id", nullable = false)
     private ContentMaster contentMaster;
 
 }

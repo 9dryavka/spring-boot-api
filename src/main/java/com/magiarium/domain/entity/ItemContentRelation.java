@@ -29,11 +29,11 @@ public class ItemContentRelation {
 
     @ManyToOne
     @JoinColumn(name = "item_id", nullable = false)
-    private ContentMaster item;
+    private ItemMaster item;
 
     @ManyToOne
-    @JoinColumn(name = "content_id", nullable = false, unique = true)
-    private ItemMaster content;
+    @JoinColumn(name = "content_id", nullable = false)
+    private ContentMaster content;
 
     @Column(name = "created_at", nullable = false, insertable = false, updatable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")

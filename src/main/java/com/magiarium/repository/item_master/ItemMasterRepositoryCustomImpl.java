@@ -4,9 +4,9 @@ import com.magiarium.domain.data.ItemGroupTypeEnum;
 import com.magiarium.domain.data.ItemTypeEnum;
 import com.magiarium.domain.data.OrderByTypeEnum;
 import com.magiarium.domain.dto.ItemMasterWithCategoryAndView;
-import com.magiarium.domain.entity.ItemGroup;
+import com.magiarium.domain.entity.ItemGroupRelation;
 import com.magiarium.domain.entity.ItemMaster;
-import com.magiarium.domain.entity.ItemTag;
+import com.magiarium.domain.entity.ItemTagRelation;
 import com.magiarium.repository.item_group_master.GroupMasterRepository;
 import io.micrometer.common.util.StringUtils;
 import jakarta.persistence.EntityManager;
@@ -49,8 +49,8 @@ public class ItemMasterRepositoryCustomImpl implements ItemMasterRepositoryCusto
         List<Predicate> predicates = new ArrayList<>();
         // グループが指定されている場合、グループ情報を絞り込む
         if (ObjectUtils.isNotEmpty(groupType) && StringUtils.isNotEmpty(groupName)) {
-            Root<ItemGroup> groupRoot = countQuery.from(ItemGroup.class);
-            Join<ItemGroup, GroupMasterRepository> groupJoin = groupRoot.join("group", JoinType.INNER);
+            Root<ItemGroupRelation> groupRoot = countQuery.from(ItemGroupRelation.class);
+            Join<ItemGroupRelation, GroupMasterRepository> groupJoin = groupRoot.join("group", JoinType.INNER);
             predicates.add(cb.and(
                     cb.equal(groupJoin.get("groupType"), groupType),
                     cb.equal(groupJoin.get("groupName"), groupName)
@@ -58,7 +58,7 @@ public class ItemMasterRepositoryCustomImpl implements ItemMasterRepositoryCusto
         }
         // タグが指定されている場合、タグ情報を絞り込む
         if (ObjectUtils.isNotEmpty(tagList)) {
-            Join<ItemMaster, ItemTag> tagJoin = itemRoot.join("tag", JoinType.INNER);
+            Join<ItemMaster, ItemTagRelation> tagJoin = itemRoot.join("tag", JoinType.INNER);
             predicates.add(tagJoin.get("tag").in(tagList));
 
         }
@@ -108,8 +108,8 @@ public class ItemMasterRepositoryCustomImpl implements ItemMasterRepositoryCusto
         List<Predicate> predicates = new ArrayList<>();
         // グループが指定されている場合、グループ情報を絞り込む
         if (ObjectUtils.isNotEmpty(groupType) && StringUtils.isNotEmpty(groupName)) {
-            Root<ItemGroup> groupRoot = query.from(ItemGroup.class);
-            Join<ItemGroup, GroupMasterRepository> groupJoin = groupRoot.join("group", JoinType.INNER);
+            Root<ItemGroupRelation> groupRoot = query.from(ItemGroupRelation.class);
+            Join<ItemGroupRelation, GroupMasterRepository> groupJoin = groupRoot.join("group", JoinType.INNER);
             predicates.add(cb.and(
                     cb.equal(groupJoin.get("groupType"), groupType),
                     cb.equal(groupJoin.get("groupName"), groupName)
@@ -117,7 +117,7 @@ public class ItemMasterRepositoryCustomImpl implements ItemMasterRepositoryCusto
         }
         // タグが指定されている場合、タグ情報を絞り込む
         if (ObjectUtils.isNotEmpty(tagList)) {
-            Join<ItemMaster, ItemTag> tagJoin = itemRoot.join("tag", JoinType.INNER);
+            Join<ItemMaster, ItemTagRelation> tagJoin = itemRoot.join("tag", JoinType.INNER);
             predicates.add(tagJoin.get("tag").in(tagList));
 
         }
@@ -126,7 +126,15 @@ public class ItemMasterRepositoryCustomImpl implements ItemMasterRepositoryCusto
             predicates.add(cb.like(itemRoot.get("title"), "%" + searchQuery + "%"));
         }
 
-        query.multiselect(itemRoot, itemRoot.get("category"), itemRoot.get("view"))
+        query.select(cb.construct(ItemMasterWithCategoryAndView.class,
+                        itemRoot.get("id"),
+                        itemRoot.get("title"),
+                        itemRoot.get("description"),
+                        itemRoot.get("createdAt"),
+                        itemRoot.get("updatedAt"),
+                        itemRoot.get("group").get("groupName"),
+                        itemRoot.get("itemViewRelations").get("viewCount")
+                ))
                 .where(
                         cb.and(
                                 cb.equal(itemRoot.get("itemType"), itemType),

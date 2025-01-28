@@ -10,15 +10,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ContentMasterRepository extends JpaRepository<ItemMaster, Long>, ContentMasterRepositoryCustom {
-
-    /**
-     * アイテムIDリストに一致するコンテンツマスタ情報を取得する
-     *
-     * @param contentType コンテンツタイプ
-     * @param itemIdList  アイテムIDリスト
-     * @return コンテンツマスタリスト
-     */
-    List<ContentMasterWithItemId> findByContentTypeAndItemIdIn(ContentTypeEnum contentType, List<Long> itemIdList);
+public interface ContentMasterRepository extends JpaRepository<ContentMaster, Long>, ContentMasterRepositoryCustom {
 
 }

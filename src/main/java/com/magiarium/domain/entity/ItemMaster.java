@@ -65,6 +65,7 @@ public class ItemMaster {
     @OneToMany(mappedBy = "item")
     private List<ItemContentRelation> itemContentRelations = new ArrayList<>();
 
-    @OneToMany(mappedBy = "content")
+    @OneToMany(mappedBy = "item")
     private List<Thread> threads = new ArrayList<>();
+
 }

@@ -29,7 +29,7 @@ public class ItemGroupRelation {
     private ItemGroupMaster group;
 
     @ManyToOne
-    @JoinColumn(name = "item_id", nullable = false, unique = true)
+    @JoinColumn(name = "item_id", nullable = false)
     private ItemMaster item;
 
     @Column(name = "created_at", nullable = false, insertable = false, updatable = false)

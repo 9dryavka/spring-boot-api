@@ -6,9 +6,8 @@ import com.magiarium.domain.dto.ContentMasterWithItemId;
 import com.magiarium.domain.dto.ItemMasterWithCategoryAndView;
 import com.magiarium.domain.dto.ItemTagMasterWithItemId;
 import com.magiarium.domain.dto.ResourceMasterWithContentId;
-import com.magiarium.domain.request.SearchContentListRequest;
-import com.magiarium.domain.response.SearchContentListResponse;
-import com.magiarium.repository.item_group_master.GroupMasterRepository;
+import com.magiarium.domain.request.SearchThumbnailContentListRequest;
+import com.magiarium.domain.response.SearchThumbnailContentListResponse;
 import com.magiarium.repository.content_master.ContentMasterRepository;
 import com.magiarium.repository.item_master.ItemMasterRepository;
 import com.magiarium.repository.resource_master.ResourceMasterRepository;
@@ -33,13 +32,13 @@ public class SearchContentListService {
     private ResourceMasterRepository resourceMasterRepository;
 
     /**
-     * コンテンツ一覧を検索する
+     * サムネイルコンテンツ一覧を検索する
      *
      * @param itemType アイテム種別
      * @param request  検索リクエスト
      * @return レスポンス用のコンテンツ一覧
      */
-    public SearchContentListResponse search(ItemTypeEnum itemType, SearchContentListRequest request) {
+    public SearchThumbnailContentListResponse search(ItemTypeEnum itemType, SearchThumbnailContentListRequest request) {
 
         // クライアント側の検索条件に基づいて、条件に合致するアイテムデータの総件数を取得する
         Long total = itemMasterRepository.countByClientSearch(
@@ -63,11 +62,12 @@ public class SearchContentListService {
                 pageable
         );
 
-        // 以下、アイテムデータに対して1対Nの関係にあるテーブルからデータを取得する
+        // DB検索用に、アイテムIDのリストを作成する
         List<Long> itemIdList = responseContentList.stream()
                 .map(ItemMasterWithCategoryAndView::getId)
                 .toList();
 
+        // 以下、アイテムデータに対して1対Nの関係にあるテーブルからデータを取得する
         // アイテムIDとコンテンツタイプをもとに、コンテンツ一覧を取得する
         List<ContentMasterWithItemId> contentMasterWithContentId = contentMasterRepository.findByContentTypeAndItemIdInWithItemId(
                 ContentTypeEnum.THUMBNAIL,
@@ -84,14 +84,12 @@ public class SearchContentListService {
                         .toList()
         );
 
-
         // アイテム単位に各データをまとめて、レスポンス情報を作成する
         // TODO ループで回してレスポンスを作成する
 
-
-        SearchContentListResponse response = new SearchContentListResponse();
+        SearchThumbnailContentListResponse response = new SearchThumbnailContentListResponse();
         response.setTotal(total);
-        
+
         return response;
 
     }
