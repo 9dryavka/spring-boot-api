@@ -1,8 +1,8 @@
 package com.magiarium.repository.item_master;
 
-import com.magiarium.domain.data.ItemGroupTypeEnum;
-import com.magiarium.domain.data.ItemTypeEnum;
-import com.magiarium.domain.data.OrderByTypeEnum;
+import com.magiarium.domain.enums.ItemGroupTypeEnum;
+import com.magiarium.domain.enums.ItemTypeEnum;
+import com.magiarium.domain.enums.OrderByTypeEnum;
 import com.magiarium.domain.dto.ItemMasterWithCategoryAndView;
 import org.springframework.data.domain.Pageable;
 

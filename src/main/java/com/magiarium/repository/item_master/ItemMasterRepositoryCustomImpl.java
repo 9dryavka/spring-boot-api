@@ -1,8 +1,8 @@
 package com.magiarium.repository.item_master;
 
-import com.magiarium.domain.data.ItemGroupTypeEnum;
-import com.magiarium.domain.data.ItemTypeEnum;
-import com.magiarium.domain.data.OrderByTypeEnum;
+import com.magiarium.domain.enums.ItemGroupTypeEnum;
+import com.magiarium.domain.enums.ItemTypeEnum;
+import com.magiarium.domain.enums.OrderByTypeEnum;
 import com.magiarium.domain.dto.ItemMasterWithCategoryAndView;
 import com.magiarium.domain.entity.ItemGroupRelation;
 import com.magiarium.domain.entity.ItemMaster;
@@ -132,8 +132,8 @@ public class ItemMasterRepositoryCustomImpl implements ItemMasterRepositoryCusto
                         itemRoot.get("description"),
                         itemRoot.get("createdAt"),
                         itemRoot.get("updatedAt"),
-                        itemRoot.get("group").get("groupName"),
-                        itemRoot.get("itemViewRelations").get("viewCount")
+                        itemRoot.get("itemGroupRelations").get("group").get("label"),
+                        itemRoot.get("itemView").get("viewCount")
                 ))
                 .where(
                         cb.and(

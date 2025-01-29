@@ -1,8 +1,8 @@
 package com.magiarium.repository.content_master;
 
-import com.magiarium.domain.data.ContentTypeEnum;
+import com.magiarium.domain.enums.ContentTypeEnum;
 import com.magiarium.domain.dto.ContentMasterWithItemId;
-import com.magiarium.domain.entity.ContentMaster;
+import com.magiarium.domain.entity.ItemContentRelation;
 import com.magiarium.domain.entity.ItemMaster;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -30,19 +30,23 @@ public class ContentMasterRepositoryCustomImpl implements ContentMasterRepositor
 
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<ContentMasterWithItemId> query = cb.createQuery(ContentMasterWithItemId.class);
-        Root<ItemMaster> contentRoot = query.from(ItemMaster.class);
-        Join<ItemMaster, ContentMaster> contentJoin = contentRoot.join("content", jakarta.persistence.criteria.JoinType.INNER);
+        Root<ItemMaster> itemRoot = query.from(ItemMaster.class);
+        Join<ItemMaster, ItemContentRelation> itemContentRelationJoin = itemRoot.join("itemContentRelations", jakarta.persistence.criteria.JoinType.INNER);
 
         query.select(cb.construct(ContentMasterWithItemId.class,
-                        contentJoin.get("itemContentRelations").get("id"),
-                        contentJoin.get("id"),
-                        contentJoin.get("contentType")
-                        // TODO ここはコンテンツマスタの情報を取得するように修正する
+                        itemRoot.get("id"),
+                        itemContentRelationJoin.get("content").get("id"),
+                        itemContentRelationJoin.get("content").get("contentType"),
+                        itemContentRelationJoin.get("content").get("label"),
+                        itemContentRelationJoin.get("content").get("description"),
+                        itemContentRelationJoin.get("content").get("contentJson"),
+                        itemContentRelationJoin.get("content").get("createdAt"),
+                        itemContentRelationJoin.get("content").get("updatedAt")
                 ))
                 .where(
                         cb.and(
-                                cb.equal(contentJoin.get("contentType"), contentType),
-                                contentRoot.get("id").in(itemIdList)
+                                itemRoot.get("id").in(itemIdList),
+                                cb.equal(itemContentRelationJoin.get("content").get("contentType"), contentType)
                         )
                 );
 

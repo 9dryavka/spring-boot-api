@@ -1,6 +1,6 @@
 package com.magiarium.repository.content_master;
 
-import com.magiarium.domain.data.ContentTypeEnum;
+import com.magiarium.domain.enums.ContentTypeEnum;
 import com.magiarium.domain.dto.ContentMasterWithItemId;
 
 import java.util.List;

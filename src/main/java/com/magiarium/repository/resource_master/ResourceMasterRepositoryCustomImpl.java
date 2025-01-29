@@ -1,6 +1,7 @@
 package com.magiarium.repository.resource_master;
 
 import com.magiarium.domain.dto.ResourceMasterWithContentId;
+import com.magiarium.domain.entity.ContentMaster;
 import com.magiarium.domain.entity.ContentResourceRelation;
 import com.magiarium.domain.entity.ResourceMaster;
 import jakarta.persistence.EntityManager;
@@ -25,11 +26,18 @@ public class ResourceMasterRepositoryCustomImpl implements ResourceMasterReposit
 
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<ResourceMasterWithContentId> query = cb.createQuery(ResourceMasterWithContentId.class);
-        Root<ContentResourceRelation> contentRoot = query.from(ContentResourceRelation.class);
-        Join<ContentResourceRelation, ResourceMaster> resourceDataMasterJoin = contentRoot.join("resource", JoinType.INNER);
+        Root<ContentMaster> contentRoot = query.from(ContentMaster.class);
+        Join<ContentMaster, ContentResourceRelation> resourceDataMasterJoin = contentRoot.join("contentResourceRelations", JoinType.INNER);
 
-        query.multiselect(contentRoot.get("content").get("id"), resourceDataMasterJoin)
-                .where(contentRoot.get("content").get("id").in(contentIdList));
+        query.select(cb.construct(ResourceMasterWithContentId.class,
+                        contentRoot.get("id"),
+                        resourceDataMasterJoin.get("resource").get("id"),
+                        resourceDataMasterJoin.get("label"),
+                        resourceDataMasterJoin.get("resource").get("resourceType"),
+                        resourceDataMasterJoin.get("resource").get("label"),
+                        resourceDataMasterJoin.get("resource").get("resourceUrl")
+                ))
+                .where(contentRoot.get("id").in(contentIdList));
 
         return entityManager.createQuery(query).getResultList();
 

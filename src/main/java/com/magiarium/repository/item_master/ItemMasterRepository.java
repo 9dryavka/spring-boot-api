@@ -1,6 +1,6 @@
 package com.magiarium.repository.item_master;
 
-import com.magiarium.domain.data.ItemTypeEnum;
+import com.magiarium.domain.enums.ItemTypeEnum;
 import com.magiarium.domain.entity.ItemMaster;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

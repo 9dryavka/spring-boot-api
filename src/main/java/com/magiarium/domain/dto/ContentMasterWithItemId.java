@@ -29,4 +29,5 @@ public class ContentMasterWithItemId {
     Timestamp createdAt;
 
     Timestamp updatedAt;
+
 }

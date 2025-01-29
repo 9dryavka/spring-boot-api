@@ -2,8 +2,9 @@ package com.magiarium.domain.response;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.magiarium.domain.data.ContentTypeEnum;
-import com.magiarium.domain.data.ItemTypeEnum;
+import com.magiarium.domain.enums.ContentTypeEnum;
+import com.magiarium.domain.enums.ItemTypeEnum;
+import com.magiarium.domain.enums.ResourceTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -37,7 +38,7 @@ public class SearchThumbnailContentListResponse {
         Timestamp itemCreatedAt;
         Timestamp itemUpdatedAt;
 
-        String itemCategory;
+        String itemGroupName;
 
         List<String> itemTags;
 
@@ -67,8 +68,7 @@ public class SearchThumbnailContentListResponse {
 
                 Long resourceId;
                 String resourceLabel;
-                String resourceType;
-                String resourceDescription;
+                ResourceTypeEnum resourceType;
                 String resourceUrl;
                 Timestamp resourceCreatedAt;
                 Timestamp resourceUpdatedAt;

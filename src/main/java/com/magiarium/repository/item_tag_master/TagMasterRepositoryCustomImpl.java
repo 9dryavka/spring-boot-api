@@ -2,7 +2,7 @@ package com.magiarium.repository.item_tag_master;
 
 import com.magiarium.domain.dto.ItemTagMasterWithItemId;
 import com.magiarium.domain.entity.ItemMaster;
-import com.magiarium.domain.entity.ItemTagMaster;
+import com.magiarium.domain.entity.ItemTagRelation;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.criteria.*;
@@ -26,11 +26,16 @@ public class TagMasterRepositoryCustomImpl implements TagMasterRepositoryCustom 
 
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<ItemTagMasterWithItemId> query = cb.createQuery(ItemTagMasterWithItemId.class);
-        Root<ItemTagMaster> tagRoot = query.from(ItemTagMaster.class);
-        Join<ItemTagMaster, ItemMaster> itemTagJoin = tagRoot.join("itemTag", JoinType.INNER);
+        Root<ItemMaster> itemRoot = query.from(ItemMaster.class);
+        Join<ItemMaster, ItemTagRelation> itemTagRelationJoin = itemRoot.join("itemTagRelations", JoinType.INNER);
 
-        query.multiselect(itemTagJoin.get("item").get("id"), tagRoot)
-                .where(itemTagJoin.get("item").get("id").in(itemIdList));
+        query.select(cb.construct(ItemTagMasterWithItemId.class,
+                itemRoot.get("id"),
+                itemTagRelationJoin.get("tag").get("id"),
+                itemTagRelationJoin.get("tag").get("label"))
+        ).where(
+                itemRoot.get("id").in(itemIdList)
+        );
 
         return entityManager.createQuery(query).getResultList();
 
