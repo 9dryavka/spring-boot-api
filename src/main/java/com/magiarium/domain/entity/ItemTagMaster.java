@@ -2,13 +2,14 @@ package com.magiarium.domain.entity;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.magiarium.domain.data.ContentTypeEnum;
+import com.magiarium.domain.enums.ItemTypeEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -16,23 +17,26 @@ import java.io.Serializable;
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.UpperCamelCaseStrategy.class)
 @Table(
-        name = "category_master",
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"content_type", "label"})}
+        name = "item_tag_master",
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"item_type", "label"})}
 )
-public class CategoryMaster implements Serializable {
+public class ItemTagMaster {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    Long id;
+    private Long id;
 
-    @Column(name = "content_type", nullable = false)
+    @Column(name = "item_type", nullable = false)
     @Enumerated(EnumType.STRING)
-    ContentTypeEnum contentType;
+    private ItemTypeEnum itemType;
 
     @Column(name = "label", length = 45, nullable = false)
-    String label;
+    private String label;
 
     @Column(name = "description")
-    String description;
+    private String description;
+
+    @OneToMany(mappedBy = "tag", fetch = FetchType.LAZY)
+    private List<ItemTagRelation> itemTagRelations = new ArrayList<>();
 }

@@ -2,7 +2,7 @@ package com.magiarium.domain.entity;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.magiarium.domain.enums.ResourceTypeEnum;
+import com.magiarium.domain.enums.ItemTypeEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,26 +19,26 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.UpperCamelCaseStrategy.class)
-@Table(name = "resource_master")
-public class ResourceMaster {
+@Table(name = "item_master")
+public class ItemMaster {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "label", length = 45, nullable = false)
-    private String label;
+    @Column(name = "is_active", nullable = false)
+    private Boolean isActive;
+
+    @Column(name = "item_type", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private ItemTypeEnum itemType;
+
+    @Column(name = "title", length = 45, nullable = false)
+    private String title;
 
     @Column(name = "description")
     private String description;
-
-    @Column(name = "resource_type", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private ResourceTypeEnum resourceType;
-
-    @Column(name = "resource_url", nullable = false, unique = true)
-    private String resourceUrl;
 
     @Column(name = "created_at", nullable = false, insertable = false, updatable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -59,6 +59,19 @@ public class ResourceMaster {
         updatedAt = new Timestamp(new Date().getTime());
     }
 
-    @OneToMany(mappedBy = "resource", fetch = FetchType.LAZY)
-    private List<ContentResourceRelation> contentResourceRelations = new ArrayList<>();
+    @OneToMany(mappedBy = "item", fetch = FetchType.LAZY)
+    private List<ItemGroupRelation> itemGroupRelations = new ArrayList<>();
+
+    @OneToMany(mappedBy = "item", fetch = FetchType.LAZY)
+    private List<ItemContentRelation> itemContentRelations = new ArrayList<>();
+
+    @OneToMany(mappedBy = "item", fetch = FetchType.LAZY)
+    private List<ItemTagRelation> itemTagRelations = new ArrayList<>();
+
+    @OneToMany(mappedBy = "item", fetch = FetchType.LAZY)
+    private List<Thread> threads = new ArrayList<>();
+
+    @OneToOne(mappedBy = "itemMaster", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private ItemView itemView;
+
 }

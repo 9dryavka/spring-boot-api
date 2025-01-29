@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/illust")
-public class IllustController {
+@RequestMapping("/note")
+public class NoteController {
 
     @Autowired
     private SearchContentListService searchIllustListService;
@@ -20,7 +20,7 @@ public class IllustController {
     @GetMapping("/search")
     public ResponseEntity<SearchThumbnailContentListResponse> searchContentList(SearchThumbnailContentListRequest request) {
 
-        SearchThumbnailContentListResponse response = searchIllustListService.search(ItemTypeEnum.ILLUST, request);
+        SearchThumbnailContentListResponse response = searchIllustListService.search(ItemTypeEnum.NOTE, request);
 
         return ResponseEntity.ok(response);
 

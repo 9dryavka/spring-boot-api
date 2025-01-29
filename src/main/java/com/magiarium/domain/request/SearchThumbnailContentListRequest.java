@@ -2,7 +2,11 @@ package com.magiarium.domain.request;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import lombok.*;
+import com.magiarium.domain.enums.ItemGroupTypeEnum;
+import com.magiarium.domain.enums.OrderByTypeEnum;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -10,19 +14,19 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.UpperCamelCaseStrategy.class)
-@Builder
-public class SearchIllustRequest {
+public class SearchThumbnailContentListRequest {
 
     String searchQuery;
 
-    String category;
+    ItemGroupTypeEnum groupType;
+
+    String groupName;
 
     List<String> tagList;
 
-    @Builder.Default
+    OrderByTypeEnum orderBy;
+
     Integer limit = 10;
 
-    @Builder.Default
     Integer offset = 0;
-
 }

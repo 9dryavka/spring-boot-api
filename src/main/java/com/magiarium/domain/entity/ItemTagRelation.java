@@ -2,7 +2,6 @@ package com.magiarium.domain.entity;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.magiarium.domain.enums.ResourceTypeEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,35 +9,28 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.UpperCamelCaseStrategy.class)
-@Table(name = "resource_master")
-public class ResourceMaster {
+@Table(name = "item_tag_relation", uniqueConstraints = @UniqueConstraint(columnNames = {"item_id", "tag_id"}))
+public class ItemTagRelation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "label", length = 45, nullable = false)
-    private String label;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_id", nullable = false)
+    private ItemMaster item;
 
-    @Column(name = "description")
-    private String description;
-
-    @Column(name = "resource_type", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private ResourceTypeEnum resourceType;
-
-    @Column(name = "resource_url", nullable = false, unique = true)
-    private String resourceUrl;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tag_id", nullable = false)
+    private ItemTagMaster tag;
 
     @Column(name = "created_at", nullable = false, insertable = false, updatable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -58,7 +50,4 @@ public class ResourceMaster {
     public void preUpdate() {
         updatedAt = new Timestamp(new Date().getTime());
     }
-
-    @OneToMany(mappedBy = "resource", fetch = FetchType.LAZY)
-    private List<ContentResourceRelation> contentResourceRelations = new ArrayList<>();
 }

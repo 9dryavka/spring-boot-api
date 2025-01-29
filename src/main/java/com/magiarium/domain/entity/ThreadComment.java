@@ -10,7 +10,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -23,27 +25,28 @@ public class ThreadComment implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    Long id;
+    private Long id;
 
-    @Column(name = "thread_id", nullable = false)
-    Long threadId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "thread_id", nullable = false)
+    private Thread thread;
 
     @Column(name = "comment_id", nullable = false)
-    Long commentId;
+    private Long commentId;
 
     @Column(name = "comment", length = 1023, nullable = false)
-    String comment;
+    private String comment;
 
     @Column(name = "created_by", length = 45)
-    String createdBy;
+    private String createdBy;
 
     @Column(name = "created_at", nullable = false, insertable = false, updatable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    Timestamp createdAt;
+    private Timestamp createdAt;
 
     @Column(name = "updated_at", nullable = false, insertable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    Timestamp updatedAt;
+    private Timestamp updatedAt;
 
     @PrePersist
     public void prePersist() {
@@ -55,5 +58,8 @@ public class ThreadComment implements Serializable {
     public void preUpdate() {
         updatedAt = new Timestamp(new Date().getTime());
     }
+
+    @OneToMany(mappedBy = "id")
+    private List<Thread> threads = new ArrayList<>();
 
 }

@@ -2,16 +2,14 @@ package com.magiarium.domain.entity;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.magiarium.domain.data.ContentTypeEnum;
+import com.magiarium.domain.enums.ItemGroupTypeEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.sql.Timestamp;
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -20,23 +18,26 @@ import java.util.List;
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.UpperCamelCaseStrategy.class)
 @Table(
-        name = "tag_master",
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"content_type", "label"})}
+        name = "item_group_master",
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"item_type", "label"})}
 )
-public class TagMaster {
+public class ItemGroupMaster implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    Long id;
+    private Long id;
 
-    @Column(name = "content_type", nullable = false)
+    @Column(name = "group_type", nullable = false)
     @Enumerated(EnumType.STRING)
-    ContentTypeEnum contentType;
+    private ItemGroupTypeEnum groupType;
 
     @Column(name = "label", length = 45, nullable = false)
-    String label;
+    private String label;
 
     @Column(name = "description")
-    String description;
+    private String description;
+
+    @OneToMany(mappedBy = "group", fetch = FetchType.LAZY)
+    private List<ItemGroupRelation> contentGroups = new ArrayList<>();
 }

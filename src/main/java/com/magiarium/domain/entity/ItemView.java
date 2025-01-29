@@ -12,15 +12,17 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.UpperCamelCaseStrategy.class)
-@Table(name = "author_data_master")
-public class AuthorMaster {
+@Table(name = "item_view")
+public class ItemView {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    Long id;
+    @Column(name = "item_id")
+    private Long itemId;
 
-    @Column(name = "name", length = 45, nullable = false, unique = true)
-    String name;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_id", referencedColumnName = "id") // 外部キー設定
+    private ItemMaster itemMaster;
 
+    @Column(name = "view_count")
+    private Long viewCount;
 }

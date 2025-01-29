@@ -16,29 +16,32 @@ import java.util.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.UpperCamelCaseStrategy.class)
-@Table(name = "content_resource", uniqueConstraints = @UniqueConstraint(columnNames = {"content_id", "resource_id"}))
-public class ContentResource {
+@Table(name = "content_resource_relation", uniqueConstraints = @UniqueConstraint(columnNames = {"content_id", "resource_id"}))
+public class ContentResourceRelation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    Long id;
+    private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "content_id", nullable = false)
-    private ContentMaster contentId;
+    private ContentMaster content;
 
-    @ManyToOne
+    @Column(name = "label", length = 45)
+    private String label;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "resource_id", nullable = false)
-    private ResourceMaster resourceId;
+    private ResourceMaster resource;
 
     @Column(name = "created_at", nullable = false, insertable = false, updatable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    Timestamp createdAt;
+    private Timestamp createdAt;
 
     @Column(name = "updated_at", nullable = false, insertable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    Timestamp updatedAt;
+    private Timestamp updatedAt;
 
     @PrePersist
     public void prePersist() {
