@@ -1,6 +1,6 @@
 package com.magiarium.controller;
 
-import com.magiarium.domain.data.ItemTypeEnum;
+import com.magiarium.domain.enums.ItemTypeEnum;
 import com.magiarium.domain.request.SearchThumbnailContentListRequest;
 import com.magiarium.domain.response.SearchThumbnailContentListResponse;
 import com.magiarium.service.SearchContentListService;

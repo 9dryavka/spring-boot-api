@@ -2,7 +2,7 @@ package com.magiarium.domain.entity;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.magiarium.domain.data.ContentAttributeTypeEnum;
+import com.magiarium.domain.enums.ContentAttributeTypeEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

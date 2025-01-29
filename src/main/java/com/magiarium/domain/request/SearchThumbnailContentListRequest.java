@@ -2,8 +2,8 @@ package com.magiarium.domain.request;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.magiarium.domain.data.ItemGroupTypeEnum;
-import com.magiarium.domain.data.OrderByTypeEnum;
+import com.magiarium.domain.enums.ItemGroupTypeEnum;
+import com.magiarium.domain.enums.OrderByTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

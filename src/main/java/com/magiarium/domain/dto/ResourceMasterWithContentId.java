@@ -1,6 +1,6 @@
 package com.magiarium.domain.dto;
 
-import com.magiarium.domain.data.ContentTypeEnum;
+import com.magiarium.domain.enums.ContentTypeEnum;
 import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
