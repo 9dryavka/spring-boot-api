@@ -59,13 +59,16 @@ public class ItemMaster {
         updatedAt = new Timestamp(new Date().getTime());
     }
 
-    @OneToMany(mappedBy = "item")
+    @OneToMany(mappedBy = "item", fetch = FetchType.LAZY)
     private List<ItemGroupRelation> itemGroupRelations = new ArrayList<>();
 
-    @OneToMany(mappedBy = "item")
+    @OneToMany(mappedBy = "item", fetch = FetchType.LAZY)
     private List<ItemContentRelation> itemContentRelations = new ArrayList<>();
 
-    @OneToMany(mappedBy = "item")
+    @OneToMany(mappedBy = "item", fetch = FetchType.LAZY)
     private List<Thread> threads = new ArrayList<>();
+
+    @OneToOne(mappedBy = "itemMaster", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private ItemView itemView;
 
 }

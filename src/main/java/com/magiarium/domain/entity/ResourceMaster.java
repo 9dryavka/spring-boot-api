@@ -59,6 +59,6 @@ public class ResourceMaster {
         updatedAt = new Timestamp(new Date().getTime());
     }
 
-    @OneToMany(mappedBy = "resource")
+    @OneToMany(mappedBy = "resource", fetch = FetchType.LAZY)
     private List<ContentResourceRelation> contentResourceRelations = new ArrayList<>();
 }

@@ -24,14 +24,14 @@ public class ContentResourceRelation {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "content_id", nullable = false)
     private ContentMaster content;
 
     @Column(name = "label", length = 45)
     private String label;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "resource_id", nullable = false)
     private ResourceMaster resource;
 

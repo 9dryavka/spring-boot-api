@@ -37,6 +37,6 @@ public class ItemTagMaster {
     @Column(name = "description")
     private String description;
 
-    @OneToMany(mappedBy = "tag")
+    @OneToMany(mappedBy = "tag", fetch = FetchType.LAZY)
     private List<ItemTagRelation> itemTagRelations = new ArrayList<>();
 }

@@ -38,6 +38,6 @@ public class ItemGroupMaster implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @OneToMany(mappedBy = "group")
+    @OneToMany(mappedBy = "group", fetch = FetchType.LAZY)
     private List<ItemGroupRelation> contentGroups = new ArrayList<>();
 }

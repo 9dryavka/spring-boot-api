@@ -9,7 +9,9 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -24,11 +26,11 @@ public class ItemGroupRelation {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id", nullable = false)
     private ItemGroupMaster group;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id", nullable = false)
     private ItemMaster item;
 
@@ -50,4 +52,5 @@ public class ItemGroupRelation {
     public void preUpdate() {
         updatedAt = new Timestamp(new Date().getTime());
     }
+
 }
