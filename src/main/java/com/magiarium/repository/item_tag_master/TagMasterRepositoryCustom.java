@@ -1,7 +1,6 @@
 package com.magiarium.repository.item_tag_master;
 
-import com.magiarium.domain.dto.ItemTagMasterWithItemId;
-import com.magiarium.domain.entity.ItemTagMaster;
+import com.magiarium.domain.dto.item_tag_master.ItemTagMasterWithItemId;
 
 import java.util.List;
 

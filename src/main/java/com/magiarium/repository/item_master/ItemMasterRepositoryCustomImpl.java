@@ -3,7 +3,7 @@ package com.magiarium.repository.item_master;
 import com.magiarium.domain.enums.ItemGroupTypeEnum;
 import com.magiarium.domain.enums.ItemTypeEnum;
 import com.magiarium.domain.enums.OrderByTypeEnum;
-import com.magiarium.domain.dto.ItemMasterWithCategoryAndView;
+import com.magiarium.domain.dto.item_master.ItemMasterWithCategoryAndView;
 import com.magiarium.domain.entity.ItemGroupRelation;
 import com.magiarium.domain.entity.ItemMaster;
 import com.magiarium.domain.entity.ItemTagRelation;

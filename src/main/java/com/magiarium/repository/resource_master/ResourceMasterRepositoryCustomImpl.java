@@ -1,9 +1,8 @@
 package com.magiarium.repository.resource_master;
 
-import com.magiarium.domain.dto.ResourceMasterWithContentId;
+import com.magiarium.domain.dto.resource_master.ResourceMasterWithContentId;
 import com.magiarium.domain.entity.ContentMaster;
 import com.magiarium.domain.entity.ContentResourceRelation;
-import com.magiarium.domain.entity.ResourceMaster;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.criteria.*;

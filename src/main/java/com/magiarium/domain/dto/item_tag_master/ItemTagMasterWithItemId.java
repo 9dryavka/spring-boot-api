@@ -1,4 +1,4 @@
-package com.magiarium.domain.dto;
+package com.magiarium.domain.dto.item_tag_master;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

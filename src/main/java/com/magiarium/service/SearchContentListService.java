@@ -1,11 +1,14 @@
 package com.magiarium.service;
 
+import com.magiarium.domain.dto.thumnail_item.ItemContentInfo;
+import com.magiarium.domain.dto.thumnail_item.ItemContentResourceInfo;
+import com.magiarium.domain.dto.thumnail_item.ItemInfo;
 import com.magiarium.domain.enums.ContentTypeEnum;
 import com.magiarium.domain.enums.ItemTypeEnum;
-import com.magiarium.domain.dto.ContentMasterWithItemId;
-import com.magiarium.domain.dto.ItemMasterWithCategoryAndView;
-import com.magiarium.domain.dto.ItemTagMasterWithItemId;
-import com.magiarium.domain.dto.ResourceMasterWithContentId;
+import com.magiarium.domain.dto.content_master.ContentMasterWithItemId;
+import com.magiarium.domain.dto.item_master.ItemMasterWithCategoryAndView;
+import com.magiarium.domain.dto.item_tag_master.ItemTagMasterWithItemId;
+import com.magiarium.domain.dto.resource_master.ResourceMasterWithContentId;
 import com.magiarium.domain.request.SearchThumbnailContentListRequest;
 import com.magiarium.domain.response.SearchThumbnailContentListResponse;
 import com.magiarium.repository.content_master.ContentMasterRepository;
@@ -87,7 +90,7 @@ public class SearchContentListService {
         ).stream().collect(Collectors.groupingBy(ResourceMasterWithContentId::getContentId));
 
         // アイテム単位に各データをまとめて、レスポンス情報を作成する
-        List<SearchThumbnailContentListResponse.ItemContentInfo> itemContentInfoList = new ArrayList<>();
+        List<ItemInfo> itemContentInfoList = new ArrayList<>();
         for (ItemMasterWithCategoryAndView baseData : responseContentList) {
             Long itemId = baseData.getId();
 
@@ -95,16 +98,16 @@ public class SearchContentListService {
             ContentMasterWithItemId itemContentInfo = contentMasterMap.get(itemId).get(0);
             List<ResourceMasterWithContentId> itemResourceInfoList = resourceMasterMap.get(itemContentInfo.getContentId());
 
-            SearchThumbnailContentListResponse.ItemContentInfo.ContentInfo.ResourceInfo resourceInfo =
-                    SearchThumbnailContentListResponse.ItemContentInfo.ContentInfo.ResourceInfo.builder()
+            ItemContentResourceInfo resourceInfo =
+                    ItemContentResourceInfo.builder()
                             .resourceId(itemResourceInfoList.get(0).getResourceId())
                             .resourceLabel(itemResourceInfoList.get(0).getResourceLabel())
                             .resourceType(itemResourceInfoList.get(0).getResourceType())
                             .resourceUrl(itemResourceInfoList.get(0).getResourceUrl())
                             .build();
 
-            SearchThumbnailContentListResponse.ItemContentInfo.ContentInfo tmpContentInfo =
-                    SearchThumbnailContentListResponse.ItemContentInfo.ContentInfo.builder()
+            ItemContentInfo tmpContentInfo =
+                    ItemContentInfo.builder()
                             .contentId(itemContentInfo.getContentId())
                             .contentType(itemContentInfo.getContentType())
                             .contentLabel(itemContentInfo.getLabel())
@@ -115,8 +118,8 @@ public class SearchContentListService {
                             .resources(resourceInfo)
                             .build();
 
-            SearchThumbnailContentListResponse.ItemContentInfo tmpItemContentInfo =
-                    SearchThumbnailContentListResponse.ItemContentInfo.builder()
+            ItemInfo tmpItemContentInfo =
+                    ItemInfo.builder()
                             .itemId(itemId)
                             .itemType(itemType)
                             .itemTitle(baseData.getTitle())

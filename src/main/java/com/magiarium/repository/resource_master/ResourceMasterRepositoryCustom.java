@@ -1,7 +1,6 @@
 package com.magiarium.repository.resource_master;
 
-import com.magiarium.domain.dto.ResourceMasterWithContentId;
-import com.magiarium.domain.entity.ResourceMaster;
+import com.magiarium.domain.dto.resource_master.ResourceMasterWithContentId;
 
 import java.util.List;
 

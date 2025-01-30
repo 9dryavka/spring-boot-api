@@ -1,15 +1,10 @@
-package com.magiarium.domain.dto;
+package com.magiarium.domain.dto.resource_master;
 
-import com.magiarium.domain.enums.ContentTypeEnum;
 import com.magiarium.domain.enums.ResourceTypeEnum;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.sql.Timestamp;
 
 @Data
 @AllArgsConstructor
