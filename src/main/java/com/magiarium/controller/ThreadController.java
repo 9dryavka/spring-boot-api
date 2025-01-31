@@ -4,6 +4,7 @@ import com.magiarium.domain.enums.ItemTypeEnum;
 import com.magiarium.domain.request.SearchThumbnailContentListRequest;
 import com.magiarium.domain.response.SearchThumbnailContentListResponse;
 import com.magiarium.service.SearchContentListService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +20,7 @@ public class ThreadController {
     private SearchContentListService searchIllustListService;
 
     @GetMapping("/search")
-    public ResponseEntity<SearchThumbnailContentListResponse> searchContentList(SearchThumbnailContentListRequest request) {
+    public ResponseEntity<SearchThumbnailContentListResponse> searchContentList(@Valid SearchThumbnailContentListRequest request) {
 
         SearchThumbnailContentListResponse response = searchIllustListService.search(ItemTypeEnum.THREAD, request);
 
