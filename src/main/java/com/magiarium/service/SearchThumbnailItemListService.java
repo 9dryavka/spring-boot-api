@@ -27,7 +27,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
-public class SearchContentListService {
+public class SearchThumbnailItemListService {
 
     @Autowired
     private ItemMasterRepository itemMasterRepository;
