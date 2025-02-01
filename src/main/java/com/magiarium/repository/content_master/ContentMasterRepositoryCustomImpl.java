@@ -1,7 +1,7 @@
 package com.magiarium.repository.content_master;
 
 import com.magiarium.domain.enums.ContentTypeEnum;
-import com.magiarium.domain.dto.ContentMasterWithItemId;
+import com.magiarium.domain.dto.content_master.ContentMasterWithItemId;
 import com.magiarium.domain.entity.ItemContentRelation;
 import com.magiarium.domain.entity.ItemMaster;
 import jakarta.persistence.EntityManager;

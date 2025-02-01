@@ -1,6 +1,6 @@
-package com.magiarium.domain.dto;
+package com.magiarium.domain.dto.content_master;
 
-import com.magiarium.domain.entity.ItemMaster;
+import com.magiarium.domain.enums.ContentTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,20 +12,22 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ItemMasterWithCategoryAndView {
+public class ContentMasterWithItemId {
 
-    Long id;
+    Long itemId;
 
-    String title;
+    Long contentId;
+
+    ContentTypeEnum contentType;
+
+    String label;
 
     String description;
+
+    String contentJson;
 
     Timestamp createdAt;
 
     Timestamp updatedAt;
-
-    String groupName;
-
-    Long viewCount;
 
 }

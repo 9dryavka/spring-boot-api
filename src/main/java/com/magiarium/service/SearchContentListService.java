@@ -1,13 +1,17 @@
 package com.magiarium.service;
 
+import com.magiarium.domain.dto.thumnail_item.ItemContentInfo;
+import com.magiarium.domain.dto.thumnail_item.ItemContentResourceInfo;
+import com.magiarium.domain.dto.thumnail_item.ItemInfo;
 import com.magiarium.domain.enums.ContentTypeEnum;
 import com.magiarium.domain.enums.ItemTypeEnum;
-import com.magiarium.domain.dto.ContentMasterWithItemId;
-import com.magiarium.domain.dto.ItemMasterWithCategoryAndView;
-import com.magiarium.domain.dto.ItemTagMasterWithItemId;
-import com.magiarium.domain.dto.ResourceMasterWithContentId;
+import com.magiarium.domain.dto.content_master.ContentMasterWithItemId;
+import com.magiarium.domain.dto.item_master.ItemMasterWithCategoryAndView;
+import com.magiarium.domain.dto.item_tag_master.ItemTagMasterWithItemId;
+import com.magiarium.domain.dto.resource_master.ResourceMasterWithContentId;
 import com.magiarium.domain.request.SearchThumbnailContentListRequest;
 import com.magiarium.domain.response.SearchThumbnailContentListResponse;
+import com.magiarium.exception.NotFoundException;
 import com.magiarium.repository.content_master.ContentMasterRepository;
 import com.magiarium.repository.item_master.ItemMasterRepository;
 import com.magiarium.repository.resource_master.ResourceMasterRepository;
@@ -41,7 +45,7 @@ public class SearchContentListService {
      * @param request  検索リクエスト
      * @return レスポンス用のコンテンツ一覧
      */
-    public SearchThumbnailContentListResponse search(ItemTypeEnum itemType, SearchThumbnailContentListRequest request) {
+    public SearchThumbnailContentListResponse search(ItemTypeEnum itemType, SearchThumbnailContentListRequest request) throws NotFoundException {
 
         // クライアント側の検索条件に基づいて、条件に合致するアイテムデータの総件数を取得する
         Long total = itemMasterRepository.countByClientSearch(
@@ -51,6 +55,9 @@ public class SearchContentListService {
                 request.getTagList(),
                 request.getSearchQuery()
         );
+        if (total == 0) {
+            throw new NotFoundException("検索結果が見つかりませんでした");
+        }
 
         // 条件に合致するアイテムデータを実際に取得する
         // ※この際、アイテムデータに対して1対1の関係にあるコンテンツデータ(カテゴリ、レビュー数)はまとめて取得する
@@ -87,7 +94,7 @@ public class SearchContentListService {
         ).stream().collect(Collectors.groupingBy(ResourceMasterWithContentId::getContentId));
 
         // アイテム単位に各データをまとめて、レスポンス情報を作成する
-        List<SearchThumbnailContentListResponse.ItemContentInfo> itemContentInfoList = new ArrayList<>();
+        List<ItemInfo> itemContentInfoList = new ArrayList<>();
         for (ItemMasterWithCategoryAndView baseData : responseContentList) {
             Long itemId = baseData.getId();
 
@@ -95,16 +102,16 @@ public class SearchContentListService {
             ContentMasterWithItemId itemContentInfo = contentMasterMap.get(itemId).get(0);
             List<ResourceMasterWithContentId> itemResourceInfoList = resourceMasterMap.get(itemContentInfo.getContentId());
 
-            SearchThumbnailContentListResponse.ItemContentInfo.ContentInfo.ResourceInfo resourceInfo =
-                    SearchThumbnailContentListResponse.ItemContentInfo.ContentInfo.ResourceInfo.builder()
+            ItemContentResourceInfo resourceInfo =
+                    ItemContentResourceInfo.builder()
                             .resourceId(itemResourceInfoList.get(0).getResourceId())
                             .resourceLabel(itemResourceInfoList.get(0).getResourceLabel())
                             .resourceType(itemResourceInfoList.get(0).getResourceType())
                             .resourceUrl(itemResourceInfoList.get(0).getResourceUrl())
                             .build();
 
-            SearchThumbnailContentListResponse.ItemContentInfo.ContentInfo tmpContentInfo =
-                    SearchThumbnailContentListResponse.ItemContentInfo.ContentInfo.builder()
+            ItemContentInfo tmpContentInfo =
+                    ItemContentInfo.builder()
                             .contentId(itemContentInfo.getContentId())
                             .contentType(itemContentInfo.getContentType())
                             .contentLabel(itemContentInfo.getLabel())
@@ -115,8 +122,8 @@ public class SearchContentListService {
                             .resources(resourceInfo)
                             .build();
 
-            SearchThumbnailContentListResponse.ItemContentInfo tmpItemContentInfo =
-                    SearchThumbnailContentListResponse.ItemContentInfo.builder()
+            ItemInfo tmpItemContentInfo =
+                    ItemInfo.builder()
                             .itemId(itemId)
                             .itemType(itemType)
                             .itemTitle(baseData.getTitle())

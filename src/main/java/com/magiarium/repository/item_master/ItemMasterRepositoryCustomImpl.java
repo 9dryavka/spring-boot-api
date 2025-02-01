@@ -3,7 +3,7 @@ package com.magiarium.repository.item_master;
 import com.magiarium.domain.enums.ItemGroupTypeEnum;
 import com.magiarium.domain.enums.ItemTypeEnum;
 import com.magiarium.domain.enums.OrderByTypeEnum;
-import com.magiarium.domain.dto.ItemMasterWithCategoryAndView;
+import com.magiarium.domain.dto.item_master.ItemMasterWithCategoryAndView;
 import com.magiarium.domain.entity.ItemGroupRelation;
 import com.magiarium.domain.entity.ItemMaster;
 import com.magiarium.domain.entity.ItemTagRelation;
@@ -53,13 +53,13 @@ public class ItemMasterRepositoryCustomImpl implements ItemMasterRepositoryCusto
             Join<ItemGroupRelation, GroupMasterRepository> groupJoin = groupRoot.join("group", JoinType.INNER);
             predicates.add(cb.and(
                     cb.equal(groupJoin.get("groupType"), groupType),
-                    cb.equal(groupJoin.get("groupName"), groupName)
+                    cb.equal(groupJoin.get("label"), groupName)
             ));
         }
         // タグが指定されている場合、タグ情報を絞り込む
         if (ObjectUtils.isNotEmpty(tagList)) {
-            Join<ItemMaster, ItemTagRelation> tagJoin = itemRoot.join("tag", JoinType.INNER);
-            predicates.add(tagJoin.get("tag").in(tagList));
+            Join<ItemMaster, ItemTagRelation> tagJoin = itemRoot.join("itemTagRelations", JoinType.INNER);
+            predicates.add(tagJoin.get("tag").get("label").in(tagList));
 
         }
         // 検索文字列が指定されている場合、タイトル情報を絞り込む
@@ -112,13 +112,13 @@ public class ItemMasterRepositoryCustomImpl implements ItemMasterRepositoryCusto
             Join<ItemGroupRelation, GroupMasterRepository> groupJoin = groupRoot.join("group", JoinType.INNER);
             predicates.add(cb.and(
                     cb.equal(groupJoin.get("groupType"), groupType),
-                    cb.equal(groupJoin.get("groupName"), groupName)
+                    cb.equal(groupJoin.get("label"), groupName)
             ));
         }
         // タグが指定されている場合、タグ情報を絞り込む
         if (ObjectUtils.isNotEmpty(tagList)) {
-            Join<ItemMaster, ItemTagRelation> tagJoin = itemRoot.join("tag", JoinType.INNER);
-            predicates.add(tagJoin.get("tag").in(tagList));
+            Join<ItemMaster, ItemTagRelation> tagJoin = itemRoot.join("itemTagRelations", JoinType.INNER);
+            predicates.add(tagJoin.get("tag").get("label").in(tagList));
 
         }
         // 検索文字列が指定されている場合、タイトル情報を絞り込む
