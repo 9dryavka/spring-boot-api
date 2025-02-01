@@ -11,6 +11,7 @@ import com.magiarium.domain.dto.item_tag_master.ItemTagMasterWithItemId;
 import com.magiarium.domain.dto.resource_master.ResourceMasterWithContentId;
 import com.magiarium.domain.request.SearchThumbnailContentListRequest;
 import com.magiarium.domain.response.SearchThumbnailContentListResponse;
+import com.magiarium.exception.NotFoundException;
 import com.magiarium.repository.content_master.ContentMasterRepository;
 import com.magiarium.repository.item_master.ItemMasterRepository;
 import com.magiarium.repository.resource_master.ResourceMasterRepository;
@@ -44,7 +45,7 @@ public class SearchContentListService {
      * @param request  検索リクエスト
      * @return レスポンス用のコンテンツ一覧
      */
-    public SearchThumbnailContentListResponse search(ItemTypeEnum itemType, SearchThumbnailContentListRequest request) {
+    public SearchThumbnailContentListResponse search(ItemTypeEnum itemType, SearchThumbnailContentListRequest request) throws NotFoundException {
 
         // クライアント側の検索条件に基づいて、条件に合致するアイテムデータの総件数を取得する
         Long total = itemMasterRepository.countByClientSearch(
@@ -54,6 +55,9 @@ public class SearchContentListService {
                 request.getTagList(),
                 request.getSearchQuery()
         );
+        if (total == 0) {
+            throw new NotFoundException("検索結果が見つかりませんでした");
+        }
 
         // 条件に合致するアイテムデータを実際に取得する
         // ※この際、アイテムデータに対して1対1の関係にあるコンテンツデータ(カテゴリ、レビュー数)はまとめて取得する
