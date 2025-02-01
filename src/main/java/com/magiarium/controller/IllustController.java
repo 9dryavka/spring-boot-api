@@ -4,7 +4,7 @@ import com.magiarium.domain.enums.ItemTypeEnum;
 import com.magiarium.domain.request.SearchThumbnailContentListRequest;
 import com.magiarium.domain.response.SearchThumbnailContentListResponse;
 import com.magiarium.exception.NotFoundException;
-import com.magiarium.service.SearchContentListService;
+import com.magiarium.service.SearchThumbnailItemListService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class IllustController {
 
     @Autowired
-    private SearchContentListService searchIllustListService;
+    private SearchThumbnailItemListService searchIllustListService;
 
     @GetMapping("/search")
     public ResponseEntity<Object> searchContentList(@Valid SearchThumbnailContentListRequest request) {
