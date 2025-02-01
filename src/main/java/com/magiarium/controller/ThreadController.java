@@ -1,10 +1,10 @@
 package com.magiarium.controller;
 
 import com.magiarium.domain.enums.ItemTypeEnum;
-import com.magiarium.domain.request.SearchThumbnailContentListRequest;
-import com.magiarium.domain.response.SearchThumbnailContentListResponse;
+import com.magiarium.domain.request.SearchThumbnailListRequest;
+import com.magiarium.domain.response.SearchThumbnailListResponse;
 import com.magiarium.exception.NotFoundException;
-import com.magiarium.service.SearchContentListService;
+import com.magiarium.service.SearchThumbnailListService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,11 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class ThreadController {
 
     @Autowired
-    private SearchContentListService searchIllustListService;
+    private SearchThumbnailListService searchIllustListService;
 
     @GetMapping("/search")
-    public ResponseEntity<Object> searchContentList(@Valid SearchThumbnailContentListRequest request) {
-        SearchThumbnailContentListResponse response;
+    public ResponseEntity<Object> searchContentList(@Valid SearchThumbnailListRequest request) {
+        SearchThumbnailListResponse response;
         try {
             response = searchIllustListService.search(ItemTypeEnum.THREAD, request);
         } catch (NotFoundException e) {

@@ -9,8 +9,8 @@ import com.magiarium.domain.dto.content_master.ContentMasterWithItemId;
 import com.magiarium.domain.dto.item_master.ItemMasterWithCategoryAndView;
 import com.magiarium.domain.dto.item_tag_master.ItemTagMasterWithItemId;
 import com.magiarium.domain.dto.resource_master.ResourceMasterWithContentId;
-import com.magiarium.domain.request.SearchThumbnailContentListRequest;
-import com.magiarium.domain.response.SearchThumbnailContentListResponse;
+import com.magiarium.domain.request.SearchThumbnailListRequest;
+import com.magiarium.domain.response.SearchThumbnailListResponse;
 import com.magiarium.exception.NotFoundException;
 import com.magiarium.repository.content_master.ContentMasterRepository;
 import com.magiarium.repository.item_master.ItemMasterRepository;
@@ -27,7 +27,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
-public class SearchContentListService {
+public class SearchThumbnailListService {
 
     @Autowired
     private ItemMasterRepository itemMasterRepository;
@@ -45,7 +45,7 @@ public class SearchContentListService {
      * @param request  検索リクエスト
      * @return レスポンス用のコンテンツ一覧
      */
-    public SearchThumbnailContentListResponse search(ItemTypeEnum itemType, SearchThumbnailContentListRequest request) throws NotFoundException {
+    public SearchThumbnailListResponse search(ItemTypeEnum itemType, SearchThumbnailListRequest request) throws NotFoundException {
 
         // クライアント側の検索条件に基づいて、条件に合致するアイテムデータの総件数を取得する
         Long total = itemMasterRepository.countByClientSearch(
@@ -119,7 +119,7 @@ public class SearchContentListService {
                             .contentJson(itemContentInfo.getContentJson())
                             .contentCreatedAt(itemContentInfo.getCreatedAt())
                             .contentUpdatedAt(itemContentInfo.getUpdatedAt())
-                            .resources(resourceInfo)
+                            .resources(List.of(resourceInfo))
                             .build();
 
             ItemInfo tmpItemContentInfo =
@@ -139,7 +139,7 @@ public class SearchContentListService {
 
         }
 
-        SearchThumbnailContentListResponse response = new SearchThumbnailContentListResponse();
+        SearchThumbnailListResponse response = new SearchThumbnailListResponse();
         response.setTotal(total);
         response.setItemList(itemContentInfoList);
 
