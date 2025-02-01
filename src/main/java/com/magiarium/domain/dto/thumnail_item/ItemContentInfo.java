@@ -23,7 +23,7 @@ public class ItemContentInfo {
     Timestamp contentCreatedAt;
     Timestamp contentUpdatedAt;
 
-    ItemContentResourceInfo resources;
+    List<ItemContentResourceInfo> resources;
 
     Long itemReviews;
     List<ItemContentInfo> childContents;

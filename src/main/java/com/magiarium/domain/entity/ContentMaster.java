@@ -62,4 +62,7 @@ public class ContentMaster {
     @OneToMany(mappedBy = "content")
     private List<ContentResourceRelation> contentResourceRelations = new ArrayList<>();
 
+    @OneToMany(mappedBy = "content")
+    private List<ContentAttribute> contentAttributes = new ArrayList<>();
+
 }

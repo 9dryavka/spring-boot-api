@@ -33,6 +33,6 @@ public class ContentAttribute {
 
     @ManyToOne
     @JoinColumn(name = "content_id", nullable = false)
-    private ContentMaster contentMaster;
+    private ContentMaster content;
 
 }
