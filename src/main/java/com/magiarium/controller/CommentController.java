@@ -1,13 +1,12 @@
 package com.magiarium.controller;
 
+import com.magiarium.domain.request.PostCommentRequest;
 import com.magiarium.domain.response.GetLatestCommentResponse;
 import com.magiarium.service.GetLatestCommentService;
+import com.magiarium.service.PostCommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/comment")
@@ -15,6 +14,8 @@ public class CommentController {
 
     @Autowired
     GetLatestCommentService getLatestCommentService;
+    @Autowired
+    PostCommentService postCommentService;
 
     @GetMapping("/latest")
     public ResponseEntity<GetLatestCommentResponse> latest() {
@@ -29,7 +30,11 @@ public class CommentController {
     }
 
     @PostMapping("/post")
-    public String post() {
-        return "post";
+    public ResponseEntity<Object> post(@RequestBody PostCommentRequest request) {
+
+        postCommentService.post(request);
+
+
+        return ResponseEntity.ok("OK");
     }
 }
