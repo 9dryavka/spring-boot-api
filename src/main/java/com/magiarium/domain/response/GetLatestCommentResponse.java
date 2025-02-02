@@ -1,4 +1,4 @@
-package com.magiarium.domain.dto.thread;
+package com.magiarium.domain.response;
 
 import com.magiarium.domain.entity.ThreadComment;
 import lombok.AllArgsConstructor;
@@ -12,11 +12,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ThreadInfo {
+public class GetLatestCommentResponse {
 
-    Long threadId;
-    String threadTitle;
-
-    List<ThreadComment> comments;
+    List<ThreadComment> latestCommentList;
 
 }
