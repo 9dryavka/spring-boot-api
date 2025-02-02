@@ -11,4 +11,6 @@ public interface ThreadCommentRepository extends JpaRepository<ThreadComment, Lo
 
     List<ThreadComment> findByThreadId(Long threadId);
 
+    List<ThreadComment> findTop50OrderByCreatedAtDesc();
+
 }
