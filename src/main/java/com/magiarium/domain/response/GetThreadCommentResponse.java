@@ -1,5 +1,6 @@
-package com.magiarium.domain.dto.thread;
+package com.magiarium.domain.response;
 
+import com.magiarium.domain.dto.thread.ThreadInfo;
 import com.magiarium.domain.entity.ThreadComment;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,11 +13,10 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ThreadInfo {
+public class GetThreadCommentResponse {
 
     Long threadId;
     String threadTitle;
 
     List<ThreadComment> comments;
-
 }
