@@ -18,19 +18,29 @@ import java.util.List;
 @JsonNaming(PropertyNamingStrategies.UpperCamelCaseStrategy.class)
 public class SearchThumbnailListRequest {
 
+    // 検索条件
     String searchQuery;
 
-    ItemGroupTypeEnum groupType;
+    // カテゴリ種別
+    ItemGroupTypeEnum categoryType;
 
-    String groupName;
+    // カテゴリ
+    String category;
 
-    List<String> tagList;
+    // 作者
+    String author;
 
+    // タグ
+    List<String> tags;
+
+    // 並び順
     OrderByTypeEnum orderBy;
 
+    // 検索上限
     @Min(1)
     @Max(100)
     Integer limit = 10;
 
+    // オフセット
     Integer offset = 0;
 }
