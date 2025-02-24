@@ -50,9 +50,9 @@ public class SearchThumbnailListService {
         // クライアント側の検索条件に基づいて、条件に合致するアイテムデータの総件数を取得する
         Long total = itemMasterRepository.countByClientSearch(
                 itemType,
-                request.getGroupType(),
-                request.getGroupName(),
-                request.getTagList(),
+                request.getCategoryType(),
+                request.getCategory(),
+                request.getTags(),
                 request.getSearchQuery()
         );
         if (total == 0) {
@@ -64,9 +64,9 @@ public class SearchThumbnailListService {
         Pageable pageable = PageRequest.of(request.getOffset(), request.getLimit());
         List<ItemMasterWithCategoryAndView> responseContentList = itemMasterRepository.findByClientSearch(
                 itemType,
-                request.getGroupType(),
-                request.getGroupName(),
-                request.getTagList(),
+                request.getCategoryType(),
+                request.getCategory(),
+                request.getTags(),
                 request.getSearchQuery(),
                 request.getOrderBy(),
                 pageable
@@ -127,6 +127,7 @@ public class SearchThumbnailListService {
                             .itemId(itemId)
                             .itemType(itemType)
                             .itemTitle(baseData.getTitle())
+                            .itemReviews(baseData.getViewCount())
                             .itemDescription(baseData.getDescription())
                             .itemCreatedAt(baseData.getCreatedAt())
                             .itemUpdatedAt(baseData.getUpdatedAt())

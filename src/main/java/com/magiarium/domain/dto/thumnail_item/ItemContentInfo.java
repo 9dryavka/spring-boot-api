@@ -11,21 +11,30 @@ import java.util.List;
 @Builder
 public class ItemContentInfo {
 
+    /* コンテンツID */
     Long contentId;
 
+    /* 種別 */
     ContentTypeEnum contentType;
 
+    /* タイトル */
     String contentLabel;
+
+    /* 説明 */
     String contentDescription;
 
+    /* コンテンツJSON */
     String contentJson;
 
+    /* 作成日時 */
     Timestamp contentCreatedAt;
+    /* 更新日時 */
     Timestamp contentUpdatedAt;
 
+    /* リソースリスト */
     List<ItemContentResourceInfo> resources;
 
-    Long itemReviews;
+    /* 子コンテンツリスト */
     List<ItemContentInfo> childContents;
 
 }

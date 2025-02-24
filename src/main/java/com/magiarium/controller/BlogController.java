@@ -11,14 +11,11 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/note")
-public class NoteController {
+@RequestMapping("/blog")
+public class BlogController {
 
     @Autowired
     private SearchThumbnailListService searchIllustListService;
@@ -26,7 +23,7 @@ public class NoteController {
     private GetContentInfoService getContentInfoService;
 
     @GetMapping("/search")
-    public ResponseEntity<Object> searchContentList(@Valid SearchThumbnailListRequest request) {
+    public ResponseEntity<Object> searchContentList(SearchThumbnailListRequest request) {
         SearchThumbnailListResponse response;
         try {
             response = searchIllustListService.search(ItemTypeEnum.NOTE, request);
