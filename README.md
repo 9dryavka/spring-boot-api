@@ -1,2 +1,1 @@
-個人ウェブサイト<br>
-クライアントはこちら：https://github.com/magiarium/magiarium_client
+サーバーサイドの処理にはLambdaとDynamoDBを使用するため、こちらは凍結。
